@@ -5,13 +5,15 @@ var keyframes = [
 		'operations': [
 			{
 				'target': 'jackleng',
-				'translateX': -100,
-				'opacity': 0.5
+				'translateX': -120,
+				'opacity': 0.5,
+				'translateY': 15
 			},
 			{
 				'target': 'helloiam',
-				'translateX': -50,
-				'opacity': 0
+				'translateX': -70,
+				'opacity': 0,
+				'translateY': 15
 			},
 			{
 				'target': 'facebg',

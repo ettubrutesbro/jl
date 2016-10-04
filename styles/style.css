@@ -47,7 +47,7 @@ video {visibility: hidden; position: absolute;}
 	margin: 0;
 	border-radius: 50%;
 	width: 10rem; height: 10rem;
-	background-image: url(itme.png);
+	background-image: url(../assets/itme.png);
 	background-size: 90%;
 	background-repeat: no-repeat;
 	background-position: center;

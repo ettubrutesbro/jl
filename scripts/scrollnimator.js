@@ -12,7 +12,6 @@ function setupValues(){
 	windowHeight = window.innerHeight
 }
 function updatePage(){
-
 	
 	// during any keyframe , we look at what % scrollProgress is of the keyframe's 'scrollTarget', 
 	// and that % multiplies by the supplied property value of that keyframe for the targeted element
@@ -32,6 +31,7 @@ function updatePage(){
 
 			// TODO: values need to be based on a diff, either from a default (unsupplied) value
 			// or through an array. 
+			// TODO: also need to be able to work with %, rem, etc.
 
 			if(ele.translateX) computedXform = 'translateX('+ele.translateX*pct+'px)'
 			if(ele.translateY) computedXform += ' translateY('+ele.translateY*pct+'px)'
@@ -40,15 +40,7 @@ function updatePage(){
 			// if(ele.rotate){}
 			setXform(tgt, computedXform)
 
-			// tgt.style.opacity = 
-
 		})		
-
-		// for(var i = 0; i<animation.length; i++){
-		// 	// setXform($(animation[i].selector), 'translateX('+animation[i].translateX+'px)')
-		// }
-
-		// setKeyframe()
 	})
 }
 function setKeyframe(){
@@ -69,9 +61,7 @@ function initializePage(){
 	
 	document.body.style.height = totalScroll
 	
-
 }
-
 
 
 function setXform(element, value){

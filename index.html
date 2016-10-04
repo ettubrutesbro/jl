@@ -1,46 +1,62 @@
 <html>
 	<head>
-		<title></title>
-		<link rel = "stylesheet" href = "style.css">
+		<title>JACK LENG</title>
+		<link href = "styles/style.css" rel = "stylesheet">
+		<link href = "styles/preto.css" rel = "stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Cousine:400,700" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Palanquin" rel="stylesheet">
+
 	</head>
 	<body>
-		<section id = "abt">
-			<div id = "facebacking"> </div>
-			<div id = "hello" class = "personality"> hello, i am: </div>
-			<div id = "abtvidcontainer">
-				<video>
-					<source src = "sketch.mp4" type = "video/mp4">
-				</video>
-				<video>
-					<source src = "wevi.mp4" type = "video/mp4">
-				</video>
-				<video>
-					<source src = "3d.mp4" type = "video/mp4">
-				</video>
-				<video>
-					<source src = "paint.mp4" type = "video/mp4">
-				</video>
-			</div>
-			<div id = "fade">
-				<img src = "fade.png" />
-			</div>
-
-			<article id = "abttext" class = "copy">
-			<p id = "bg">
-				...he/him who's made interfaces, pitches, and assorted objects with felt tip pens, adobe CS, javascript, 3d studio max, a circular saw & other tools. 
-				</p>
-				<p id = "dream">
-				my dream is to design innovative, irreverent things for a worthy cause
-				</p>
+	<div class = "fixed" id = "fixedbg">
+		<figure class = "myface" id = "facebg"></figure>
+		<section id = "abttext">
+			<article id = "hello">
+				<h3 class = "cousine" id = "helloiam">HELLO, I AM</h3>
+				<h1 class = "preto" id = "jackleng">jack leng</h1>	
 			</article>
+			<article id = "abtme" class = "cousine">
+				<p>
+					: he/him who's made interfaces, pitches, and assorted objects with felt tip pens, adobe CS, javascript, 3d studio max, a circular saw & other tools. 
+				</p>
 
+				
+			</article>
 		</section>
+	</div>
+	<div class = "fixed" id = "fixedfg">
+ 		<figure class = "myface" id = "facefg"></figure>
+		
+	</div>
 
-		<div id = "myface"> </div>
 
 
-		<script src = "velocity.min.js"> </script>
-		<script src = "script.js"> </script>
+		
+
+			<div id = "abtvid">
+				<video>
+					<source src = "assets/sketch.mp4" type = "video/mp4">
+				</video>
+				<video>
+					<source src = "assets/wevi.mp4" type = "video/mp4">
+				</video>
+				<video>
+					<source src = "assets/3d.mp4" type = "video/mp4">
+				</video>
+				<video>
+					<source src = "assets/paint.mp4" type = "video/mp4">
+				</video>
+			</div>
+
+
+		
+
+		<!-- END ABOUT SECTION -->
+
+
+
+		<script src = "scripts/throttle.js"> </script>
+		<script src = "scripts/etcript.js"> </script>
+		<script src = "scripts/keyframes.js"> </script>
+		<script src = "scripts/scrollnimator.js"> </script>
+		
 	</body>

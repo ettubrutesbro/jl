@@ -1,0 +1,9 @@
+@font-face {
+	font-family: 'Preto';
+	font-style: normal;
+	font-weight: 400;
+	src: 
+		url('../assets/fonts/preto.woff2') format('woff2'),
+		url('../assets/fonts/preto.woff') format('woff'),
+		url('../assets/fonts/preto.ttf') format('truetype');
+}
