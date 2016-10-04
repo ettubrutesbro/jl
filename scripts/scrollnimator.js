@@ -3,6 +3,8 @@ var initialHt = window.innerHeight //on resize, this should be reset
 var windowWidth = windowHeight = 
 currentkey = sumPrevScrolls = 0
 
+var propertyList = ['translateX', 'translateY', 'scale', 'rotate'],
+propertyDefaults = [0,0,1,0], unitList = ['px','em','rem','%']
 
 initializePage()
 // setInterval(updatePage,10)
@@ -33,11 +35,34 @@ function updatePage(){
 			// or through an array. 
 			// TODO: also need to be able to work with %, rem, etc.
 
-			if(ele.translateX) computedXform = 'translateX('+ele.translateX*pct+'px)'
-			if(ele.translateY) computedXform += ' translateY('+ele.translateY*pct+'px)'
-			// if(ele.scale) computedXform += ' scale('+1-ele.scale*pct+')'
-			// if(ele.opacity) tgt.style.opacity = (1-ele.opacity) * pct
-			// if(ele.rotate){}
+			for(var i = 0; i<propertyList.length; i++){
+				var p = propertyList[i]
+				if(ele[p]){
+					if(computedXform) computedXform += ' '
+					else computedXform = ''
+					//TODO: orig variable needs to match the element.style.property as first priority
+					var orig = ele[p].isArray? ele[p][1] : propertyDefaults[i] //value before keyframe
+
+					var d, unit = ''
+					if(typeof ele[p] === 'string'){
+						for(var it = 0; it<unitList.length; it++){
+							if(ele[p].indexOf(unitList[it]) > -1){
+								d = ele[p].replace(/[^\d.-]/g, '')
+								unit = unitList[it]
+							} 
+						}
+					}
+					d = orig - ((orig-d)*pct) + unit
+		
+			
+					computedXform += propertyList[i] + '(' + d + ')'
+					
+				}
+			}
+
+			// if(ele.translateX) computedXform = 'translateX('+ele.translateX*pct+'px)'
+			// if(ele.translateY) computedXform += ' translateY('+ele.translateY*pct+'px)'
+
 			setXform(tgt, computedXform)
 
 		})		
@@ -65,6 +90,7 @@ function initializePage(){
 
 
 function setXform(element, value){
+	console.log(value)
 	element.style.webkitTransform = element.style.mozTransform = element.style.transform =
 	element.style.msTransform = element.style.oTransform = value
 }

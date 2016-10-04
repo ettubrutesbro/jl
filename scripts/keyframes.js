@@ -5,28 +5,27 @@ var keyframes = [
 		'operations': [
 			{
 				'target': 'jackleng',
-				'translateX': -120,
+				'translateX': '-120px',
 				'opacity': 0.5,
-				'translateY': 15
+				'translateY': '15px'
 			},
 			{
 				'target': 'helloiam',
-				'translateX': -70,
+				'translateX': '-70px',
 				'opacity': 0,
-				'translateY': 15
+				'translateY': '15px'
 			},
 			{
 				'target': 'facebg',
-				'translateX': 30
+				'translateX': '30px'
 			},
 			{
 				'target': 'facefg',
-				'translateX': 30
+				'translateX': '30px'
 			},
 			{
 				'target': 'abtme',
-				'translateX': 1,
-				'translateY': -30
+				'translateY': '-30px'
 				// 'scale': 0.5
 			}
 
