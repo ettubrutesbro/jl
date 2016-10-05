@@ -4,17 +4,19 @@
 var rangeEnd = 200
 var ranges = [
 	{
-		rg: [5,40],
+		rg: [0,40], //range should be able to be set
+		//as a % of (maybe dynamic pixel value
+		// that changes with resize?)
 		objs: [
 			{
 				'target': 'jackleng',
-				'translateX': '-120px',
-				'translateY': '15px'
+				'translateX': '-75%',
+				'translateY': '1rem'
 			},
 			{
 				'target': 'helloiam',
-				'translateX': '-70px',
-				'translateY': '21px'
+				'translateX': '-30%',
+				'translateY': '1rem'
 			},
 			{
 				'target': 'abtme',
@@ -22,20 +24,11 @@ var ranges = [
 			}
 	
 		],
-		callduring: function(){ //runs upon first entering range
-			console.log('call during')
-		},
-		callback: function(){ //runs upon exceeding range
-			console.log('call back / exceed')
-		},
-		callforward: function(){ //runs upon going below range
-			console.log('call forward / under')
-		},
 		active: false
 	},
 
 	{
-		rg: [5,80],
+		rg: [0,80],
 		objs: [
 			{
 				'target': 'facebg',
@@ -48,6 +41,7 @@ var ranges = [
 				'translateX': '300px'
 			},
 		],
+		active:false
 
 	}
 

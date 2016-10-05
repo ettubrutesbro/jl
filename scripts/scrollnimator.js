@@ -8,6 +8,19 @@ propertyDefaults = [0,0,1,0], unitList = ['px','em','rem','%']
 window.addEventListener('scroll', throttle(updatePage, 10))
 initializePage()
 
+/*
+	BUILDING THE PAGE:
+
+	we should already know the heights of the 3 sections
+	those sections' offsetHeights (px) should be seeded into var ranges,
+	[[or is it bounding box bottom coordinates..?]]
+	so we can have ranges that respond to percentages of sections
+		(currently, the shitty logic is based on a % multiple of the window.clientHeight)
+
+	when resizing (DEBOUNCED!!! from _.js), regrab those heights, reseed the ranges, 
+	use 'prog' to retain user's position on page 
+
+*/
 function initializePage(){
 	// var totalScroll = 0
 	// for(var i=0; i<keyframes.length; i++){
@@ -29,7 +42,7 @@ function updatePage(){
 
 		for(var i = 0; i<ranges.length; i++){ //per range ops
 			var r = ranges[i]
-
+			//CHECKING FOR EXCEED / PRECEDE
 			if(prog > r.rg[1]){ //progress exceeds range
 				if(r.active){ //this boolean should ensure call_ functions only get executed once until
 					//range has been re-entered
@@ -79,11 +92,7 @@ function updatePage(){
 					r.active = true
 				}
 			}
-
-			//TODO: if the scroll wheel / etc. doesnt catch the 100 rangepct value, things will potentially
-			//be out of position. if prog falls outside of the range we should set value to destinations
-
-			
+			//PROGRESSING THRU RANGE: CALCULATING PROPERTY VALUES BASED ON "RANGEPCT"
 			var rangepct = (scrollProgress() - r.rg[0]) / (r.rg[1] - r.rg[0])
 
 			for(var it = 0; it<r.objs.length; it++){ //per element ops
