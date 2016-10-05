@@ -25,17 +25,55 @@ function updatePage(){
 	// and that % multiplies by the supplied property value of that keyframe for the targeted element
 	window.requestAnimationFrame(function(){
 
+		var prog = scrollProgress()
 
-
-		for(var i = 0; i<ranges.length; i++){
-			var prog = scrollProgress()
+		for(var i = 0; i<ranges.length; i++){ //per range ops
+		// during range from scroll% X-Y, set property to % of destination value
 			if(prog < ranges[i].rg[0] || prog > ranges[i].rg[1]) continue //current pct is outside this range
+
+			//TODO: if the scroll wheel / etc. doesnt catch the 100 rangepct value, things will potentially
+			//be out of position. if prog falls outside of the range we should set value to destinations
+
 			var r = ranges[i],
 			rangepct = (scrollProgress() - r.rg[0]) / (r.rg[1] - r.rg[0])
-			console.log('range'+i + ':' + rangepct)
 
-		
-		}
+			for(var it = 0; it<r.objs.length; it++){ //per element ops
+
+				var obj = r.objs[it], //object with destination values for a DOM element's properties
+				computedXform, //string stores transform values, to be pushed after
+				tgt = $(obj.target)
+
+				for(var ite = 0; ite<propertyList.length; ite++){ //per property (transforms) ops
+					var p = propertyList[ite]
+					
+					if(obj[p]){ //if this object contains a property from property list...
+						if(computedXform) computedXform += ' '
+						else computedXform =''
+
+						var orig = obj[p].isArray? obj[p][1].replace(/[^\d.-]/g, '') : propertyDefaults[ite],//value before this range begins 
+						//unfortunately the above solution means we rely on forcefed arrays (repeat info..)
+						d, unit = '' //these will eventually be pushed into xform
+						if(typeof obj[p] === 'string'){ //accounts for units ('px' etc)
+							for(var iter = 0; iter < unitList.length; iter++){
+								if(obj[p].indexOf(unitList[iter])>-1){
+									d = obj[p].replace(/[^\d.-]/g, '')
+									unit = unitList[iter]
+								}
+							}
+						}else d = obj[p]
+						d = orig - ((orig-d)*rangepct) + unit
+						computedXform += p + '(' + d + ')'
+
+
+
+
+					}
+				}//end property computation
+
+				console.log(obj.target, computedXform)
+				setXform(tgt, computedXform)
+			}//end element ops
+
 
 
 		/*
@@ -74,18 +112,9 @@ function updatePage(){
 
 		})	
 		*/	
+		}
 	})
 }
-// function setKeyframe(){
-// 	if(window.scrollY > keyframes[currentkey].scrollTarget + sumPrevScrolls) {
-// 		sumPrevScrolls += keyframes[currentkey].scrollTarget
-// 		currentkey++
-
-// 	}else if(window.scrollY < sumPrevScrolls){
-// 		currentkey--
-// 		sumPrevScrolls -= keyframes[currentkey].scrollTarget
-// 	}
-// }
 
 function setXform(element, value){
 	element.style.webkitTransform = element.style.mozTransform = element.style.transform =
