@@ -5,7 +5,7 @@ sumPrevScrolls = 0
 var propertyList = ['translateX', 'translateY', 'scale', 'rotate'],
 propertyDefaults = [0,0,1,0], unitList = ['px','em','rem','%']
 
-window.addEventListener('scroll', throttle(updatePage, 15))
+window.addEventListener('scroll', throttle(updatePage, 10))
 initializePage()
 
 function initializePage(){
@@ -39,28 +39,32 @@ function updatePage(){
 
 			for(var it = 0; it<r.objs.length; it++){ //per element ops
 
-				var obj = r.objs[it], //object with destination values for a DOM element's properties
-				computedXform, //string stores transform values, to be pushed after
-				tgt = $(obj.target)
+				var obj = r.objs[it] //object with destination values for a DOM element's properties
+				var computedXform = '' //string stores transform values, to be pushed after
+				var tgt = $(obj.target)
 
 				for(var ite = 0; ite<propertyList.length; ite++){ //per property (transforms) ops
 					var p = propertyList[ite]
-					
+
 					if(obj[p]){ //if this object contains a property from property list...
 						if(computedXform) computedXform += ' '
-						else computedXform =''
 
-						var orig = obj[p].isArray? obj[p][1].replace(/[^\d.-]/g, '') : propertyDefaults[ite],//value before this range begins 
-						//unfortunately the above solution means we rely on forcefed arrays (repeat info..)
+						var orig = Array.isArray(obj[p])? Number(obj[p][1].replace(/[^\d.-]/g, '')) : propertyDefaults[ite], 
 						d, unit = '' //these will eventually be pushed into xform
-						if(typeof obj[p] === 'string'){ //accounts for units ('px' etc)
+
+						if(typeof obj[p] === 'string' || typeof obj[p][0] === 'string'){ //accounts for units ('px' etc)
+							var o 
+							if(Array.isArray(obj[p])) o = obj[p][0]//use obj[p][0] instead of obj[p]
+							else o = obj[p]
 							for(var iter = 0; iter < unitList.length; iter++){
-								if(obj[p].indexOf(unitList[iter])>-1){
-									d = obj[p].replace(/[^\d.-]/g, '')
+								if(o.indexOf(unitList[iter])>-1){
+									d = o.replace(/[^\d.-]/g, '')
 									unit = unitList[iter]
 								}
 							}
-						}else d = obj[p]
+						}
+						else if(Array.isArray(obj[p])) d = obj[p][0]
+						else d = obj[p]
 						d = orig - ((orig-d)*rangepct) + unit
 						computedXform += p + '(' + d + ')'
 

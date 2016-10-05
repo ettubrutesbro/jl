@@ -4,7 +4,7 @@
 var rangeEnd = 200
 var ranges = [
 	{
-		rg: [0,50],
+		rg: [5,40],
 		objs: [
 			{
 				'target': 'jackleng',
@@ -14,20 +14,28 @@ var ranges = [
 			{
 				'target': 'helloiam',
 				'translateX': '-70px',
-				// 'translateY': '15px'
+				'translateY': '21px'
 			},
-		]
+			{
+				'target': 'abtme',
+				'translateY': '-30px'
+			}
+	
+		],
+		callback: '', //triggers once after ?
+		callforward: '' //triggers once before?
 	},
+
 	{
-		rg: [40,100],
+		rg: [5,100],
 		objs: [
 			{
 				'target': 'facebg',
-				'translateX': '800px'
+				'translateX': '200px'
 			},
 			{
 				'target': 'facefg',
-				'translateX': '800px'
+				'translateX': '200px'
 			},
 		]
 	}
