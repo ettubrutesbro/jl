@@ -22,22 +22,33 @@ var ranges = [
 			}
 	
 		],
-		callback: '', //triggers once after ?
-		callforward: '' //triggers once before?
+		callduring: function(){ //runs upon first entering range
+			console.log('call during')
+		},
+		callback: function(){ //runs upon exceeding range
+			console.log('call back / exceed')
+		},
+		callforward: function(){ //runs upon going below range
+			console.log('call forward / under')
+		},
+		active: false
 	},
 
 	{
-		rg: [5,100],
+		rg: [5,80],
 		objs: [
 			{
 				'target': 'facebg',
-				'translateX': '200px'
+				// 'translateX': $('abtvid').offsetWidth/2 - $('facefg').offsetWidth/2 + 'px'
+				'translateX': '300px'
 			},
 			{
 				'target': 'facefg',
-				'translateX': '200px'
+				// 'translateX': $('abtvid').offsetWidth/2 - $('facefg').offsetWidth/2 + 'px'
+				'translateX': '300px'
 			},
-		]
+		],
+
 	}
 
 

@@ -28,14 +28,63 @@ function updatePage(){
 		var prog = scrollProgress()
 
 		for(var i = 0; i<ranges.length; i++){ //per range ops
-		// during range from scroll% X-Y, set property to % of destination value
-			if(prog < ranges[i].rg[0] || prog > ranges[i].rg[1]) continue //current pct is outside this range
+			var r = ranges[i]
+
+			if(prog > r.rg[1]){ //progress exceeds range
+				if(r.active){ //this boolean should ensure call_ functions only get executed once until
+					//range has been re-entered
+					if(typeof r.callback === 'function') r.callback()
+					r.active = false
+					//set all properties to ending values
+					for(var it = 0; it<r.objs.length; it++){
+						var obj = r.objs[it]
+						var computedXform = ''
+						var tgt = $(obj.target)
+						for(var ite = 0; ite<propertyList.length; ite++){
+							p = propertyList[ite]
+							if(obj[p]){
+								var v = Array.isArray(obj[p])? obj[p][1] : obj[p]
+								computedXform+= ' '+p+'('+v+')'
+							}
+						}
+						setXform(tgt,computedXform)
+					}
+					continue
+				}
+				else continue
+			}else if(prog < r.rg[0]){ //progress precedes range
+				if(r.active){
+					if(typeof r.callforward === 'function') r.callforward()
+					r.active = false
+					//set all properties to beginning values, or failing that, defaults
+					for(var it = 0; it<r.objs.length; it++){
+						var obj = r.objs[it]
+						var computedXform = ''
+						var tgt = $(obj.target)
+						for(var ite = 0; ite<propertyList.length; ite++){
+							p = propertyList[ite]
+							if(obj[p]){
+								var v = Array.isArray(obj[p])? obj[p][0] : propertyDefaults[ite]
+								computedXform+= ' '+p+'('+v+')'
+							}
+						}
+						setXform(tgt,computedXform)
+					}
+					continue
+				}
+				else continue
+			}else{
+				if(!r.active){ //entering range for the 1st time
+					if(typeof r.callduring === 'function') r.callduring()
+					r.active = true
+				}
+			}
 
 			//TODO: if the scroll wheel / etc. doesnt catch the 100 rangepct value, things will potentially
 			//be out of position. if prog falls outside of the range we should set value to destinations
 
-			var r = ranges[i],
-			rangepct = (scrollProgress() - r.rg[0]) / (r.rg[1] - r.rg[0])
+			
+			var rangepct = (scrollProgress() - r.rg[0]) / (r.rg[1] - r.rg[0])
 
 			for(var it = 0; it<r.objs.length; it++){ //per element ops
 
@@ -47,23 +96,22 @@ function updatePage(){
 					var p = propertyList[ite]
 
 					if(obj[p]){ //if this object contains a property from property list...
-						if(computedXform) computedXform += ' '
+						computedXform += ' '
 
-						var orig = Array.isArray(obj[p])? Number(obj[p][1].replace(/[^\d.-]/g, '')) : propertyDefaults[ite], 
+						var orig = Array.isArray(obj[p])? Number(obj[p][0].replace(/[^\d.-]/g, '')) : propertyDefaults[ite], 
 						d, unit = '' //these will eventually be pushed into xform
 
-						if(typeof obj[p] === 'string' || typeof obj[p][0] === 'string'){ //accounts for units ('px' etc)
-							var o 
-							if(Array.isArray(obj[p])) o = obj[p][0]//use obj[p][0] instead of obj[p]
-							else o = obj[p]
+						if(typeof obj[p] === 'string' || typeof obj[p][1] === 'string'){ //accounts for units ('px' etc)
+							if(Array.isArray(obj[p])) d = obj[p][1]//use obj[p][0] instead of obj[p]
+							else d = obj[p]
 							for(var iter = 0; iter < unitList.length; iter++){
-								if(o.indexOf(unitList[iter])>-1){
-									d = o.replace(/[^\d.-]/g, '')
+								if(d.indexOf(unitList[iter])>-1){
+									d = d.replace(/[^\d.-]/g, '')
 									unit = unitList[iter]
 								}
 							}
 						}
-						else if(Array.isArray(obj[p])) d = obj[p][0]
+						else if(Array.isArray(obj[p])) d = obj[p][1]
 						else d = obj[p]
 						d = orig - ((orig-d)*rangepct) + unit
 						computedXform += p + '(' + d + ')'
@@ -73,49 +121,8 @@ function updatePage(){
 
 					}
 				}//end property computation
-
-				console.log(obj.target, computedXform)
 				setXform(tgt, computedXform)
 			}//end element ops
-
-
-
-		/*
-		keyframes[currentkey].operations.forEach(function(ele,i,arr){
-			var tgt = $(ele.target),
-			computedXform
-
-			for(var i = 0; i<propertyList.length; i++){
-				var p = propertyList[i]
-				if(ele[p]){
-					if(computedXform) computedXform += ' '
-					else computedXform = ''
-
-					var orig //value before keyframe
-					if(currentkey > 0){
-						orig = keyframes[currentkey-1].operations
-					}
-					else orig = ele[p].isArray? ele[p][1] : propertyDefaults[i]
-
-					var d, unit = ''
-					if(typeof ele[p] === 'string'){
-						for(var it = 0; it<unitList.length; it++){
-							if(ele[p].indexOf(unitList[it]) > -1){
-								d = ele[p].replace(/[^\d.-]/g, '')
-								unit = unitList[it]
-							} 
-						}
-					}
-					d = orig - ((orig-d)*pct) + unit
-					computedXform += p + '(' + d + ')'
-					
-				}
-			}
-
-			setXform(tgt, computedXform)
-
-		})	
-		*/	
 		}
 	})
 }
