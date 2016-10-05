@@ -9,11 +9,12 @@ window.addEventListener('scroll', throttle(updatePage, 15))
 initializePage()
 
 function initializePage(){
-	var totalScroll = 0
-	for(var i=0; i<keyframes.length; i++){
-		totalScroll += Number(keyframes[i].scrollTarget)/100 * window.innerHeight
-	}
-	document.body.style.height = totalScroll	
+	// var totalScroll = 0
+	// for(var i=0; i<keyframes.length; i++){
+	// 	totalScroll += Number(keyframes[i].scrollTarget)/100 * window.innerHeight
+	// }
+
+	document.body.style.height = window.innerHeight * (rangeEnd/100)	
 }
 function setupValues(){
 	windowWidth = window.innerWidth
@@ -23,9 +24,21 @@ function updatePage(){
 	// during any keyframe , we look at what % scrollProgress is of the keyframe's 'scrollTarget', 
 	// and that % multiplies by the supplied property value of that keyframe for the targeted element
 	window.requestAnimationFrame(function(){
-		var op = keyframes[currentkey],
-		pct = scrollProgress() / op.scrollTarget
 
+
+
+		for(var i = 0; i<ranges.length; i++){
+			var prog = scrollProgress()
+			if(prog < ranges[i].rg[0] || prog > ranges[i].rg[1]) continue //current pct is outside this range
+			var r = ranges[i],
+			rangepct = (scrollProgress() - r.rg[0]) / (r.rg[1] - r.rg[0])
+			console.log('range'+i + ':' + rangepct)
+
+		
+		}
+
+
+		/*
 		keyframes[currentkey].operations.forEach(function(ele,i,arr){
 			var tgt = $(ele.target),
 			computedXform
@@ -35,8 +48,12 @@ function updatePage(){
 				if(ele[p]){
 					if(computedXform) computedXform += ' '
 					else computedXform = ''
-					//TODO: orig variable needs to match the element.style.property as first priority
-					var orig = ele[p].isArray? ele[p][1] : propertyDefaults[i] //value before keyframe
+
+					var orig //value before keyframe
+					if(currentkey > 0){
+						orig = keyframes[currentkey-1].operations
+					}
+					else orig = ele[p].isArray? ele[p][1] : propertyDefaults[i]
 
 					var d, unit = ''
 					if(typeof ele[p] === 'string'){
@@ -48,14 +65,15 @@ function updatePage(){
 						}
 					}
 					d = orig - ((orig-d)*pct) + unit
-					computedXform += propertyList[i] + '(' + d + ')'
+					computedXform += p + '(' + d + ')'
 					
 				}
 			}
 
 			setXform(tgt, computedXform)
 
-		})		
+		})	
+		*/	
 	})
 }
 // function setKeyframe(){
@@ -70,11 +88,11 @@ function updatePage(){
 // }
 
 function setXform(element, value){
-	console.log(value)
 	element.style.webkitTransform = element.style.mozTransform = element.style.transform =
 	element.style.msTransform = element.style.oTransform = value
 }
 function scrollProgress() {
+	//returns what percentage of window inner height the user has scrolled to (100s)
  	return (((document.body.scrollTop/(document.body.scrollHeight - document.body.clientHeight)) * (document.body.offsetHeight / initialHt)) * 100).toFixed(1)/1
 }
 
