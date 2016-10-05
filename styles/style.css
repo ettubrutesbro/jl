@@ -17,9 +17,11 @@ h3 { font-size: 1.35rem;  margin: 0; letter-spacing: .1rem; font-weight: 700;}
 
 
 
-#abtvid {
-	height: 610px; width: 1600px;
-	right: 0; left: 0; margin: 13rem auto 0 auto;	
+#abt {
+	/*height / width need to be affected by media queries*/
+	width: 1600px;
+	right: 0; left: 0; margin: 0rem auto 0 auto;
+	/*padding-top: 13rem;	*/
 }
 /*	#abtvid::before{
 		content: '';
@@ -31,7 +33,7 @@ h3 { font-size: 1.35rem;  margin: 0; letter-spacing: .1rem; font-weight: 700;}
 
 
 
-video {visibility: hidden; position: absolute;}
+video {visibility: hidden; position: absolute; padding-top: 1rem;}
 
 .fixed {
 	width: inherit;
@@ -52,6 +54,12 @@ video {visibility: hidden; position: absolute;}
 	background-repeat: no-repeat;
 	background-position: center;
 	margin-right: 2rem;
+		/*hacky HA enabling, for desktop browsers*/
+		transform: translate3d(0,0,0);
+		-webkit-transform: translate3d(0,0,0);
+		-moz-transform: translate3d(0,0,0);
+		-ms-transform: translate3d(0,0,0);
+		-o-transform: translate3d(0,0,0);
 }
 	
 	.myface#facebg{	background-color: black;}
@@ -67,17 +75,23 @@ video {visibility: hidden; position: absolute;}
 		background-color: white;
 	}
 
-#abttext {
-	position: absolute;
-	display: flex; justify-content: flex-end;
-	width: 100%;
+#abt #text {
+	/*visibility: hidden;*/
+	display: flex; justify-content: space-between;
+	width: inherit;
 	height: 10rem;
+
 }
 #hello{
-	position: absolute; left:12rem;
-	height: 6.25rem;
-	top: 0; bottom: 0; margin: auto auto;
+	position: relative;
+	padding-left: 12rem;
+	align-self: center;
+	flex-basis: 35%;
+	height: 4.85rem;
 }
+	#hello *{ position: absolute; }
+	#hello #helloiam { height: 1.35rem;  top: 0;}
+	#hello #jackleng { height: 3.5rem;  top: 1.35rem;}
 
 #abtme {
 	flex-basis: 47%; align-self: center;
