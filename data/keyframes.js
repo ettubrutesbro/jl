@@ -23,11 +23,11 @@ var ranges = [
 			},
 			{
 				'target': 'hellowrapper',
-				'translateY': '300%'
+				'translateY': '18rem'
 			},
 			{
 				'target': 'abtme',
-				'translateY': '-3rem'
+				'translateY': '-3.5rem'
 			}
 	
 		],
@@ -35,7 +35,7 @@ var ranges = [
 	},
 
 	{
-		rg: [0,80],
+		rg: [40,100],
 		objs: [
 			{
 				'target': 'facebg',

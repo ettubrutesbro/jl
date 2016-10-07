@@ -1,13 +1,6 @@
 
 html{
-}
-
-body{
-	width: 1600px;
-	right: 0; left: 0;
-	margin: auto auto;
-	font-size: 11px;
-	overflow-x: hidden;
+	font-size: 16px;
 }
 
 .cousine { font-family: 'Cousine', monospace; }
@@ -15,25 +8,13 @@ body{
 h1 { font-size: 3.5rem;  margin: 0; font-weight: normal;}
 h3 { font-size: 1.35rem;  margin: 0; letter-spacing: .1rem; font-weight: 700;}
 
-
-
-#abt {
-	/*height / width need to be affected by media queries*/
+body{
 	width: 1600px;
-	right: 0; left: 0; margin: 0rem auto 0 auto;
-	/*padding-top: 13rem;	*/
+	right: 0; left: 0;
+	margin: auto auto;
+	
+	overflow-x: hidden;
 }
-/*	#abtvid::before{
-		content: '';
-		position: absolute; right: 0;
-		width: 87%; height: 610px;
-		background-color: white;
-		box-shadow: 0 0 2.75rem 1rem white;
-	}*/
-
-
-
-video {visibility: hidden; position: absolute; padding-top: 1rem;}
 
 .fixed {
 	width: inherit;
@@ -61,7 +42,6 @@ video {visibility: hidden; position: absolute; padding-top: 1rem;}
 		-ms-transform: translate3d(0,0,0);
 		-o-transform: translate3d(0,0,0);
 }
-	
 	.myface#facebg{	background-color: black;}
 	.myface#facebg::before, .myface#bg::after{ content: ''; position: absolute; z-index: 1;}
 	.myface#facebg::before{
@@ -75,21 +55,26 @@ video {visibility: hidden; position: absolute; padding-top: 1rem;}
 		background-color: white;
 	}
 
-#abt #text {
+#abt {
+	width: inherit;
+	right: 0; left: 0; margin: 0rem auto 0 auto;
+}
+	#abt #text {
 	/*visibility: hidden;*/
 	display: flex; justify-content: space-between;
 	width: inherit;
 	height: 10rem;
-
+	padding-top: .5rem;
 }
 #hello{
 	position: relative;
 	padding-left: 12rem;
 	align-self: center;
-	flex-basis: 35%;
-	height: 4.85rem;
+	flex-basis: 35%
+;	height: 4.85rem;
 }
-	#hello *{ position: absolute; }
+	#hello *{ position: absolute; width: 100%;}
+	#hello #hellowrapper{ height: 100%; }
 	#hello #helloiam { height: 1.35rem;  top: 0;}
 	#hello #jackleng { height: 3.5rem;  top: 1.35rem;}
 
@@ -99,3 +84,18 @@ video {visibility: hidden; position: absolute; padding-top: 1rem;}
 	font-size: 1.25rem;
 	line-height: 1.9rem;
 }
+video {visibility: hidden; position: absolute; padding-top: 2rem;}
+
+#work {
+	/*display: flex; justify-content: space-between;*/
+	/*width: inherit;*/
+}
+
+#work .project{
+	position: absolute;
+	border: 1px solid black;
+	width: 17.5rem; height: 17.5rem;
+
+
+}
+
