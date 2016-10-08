@@ -42,7 +42,29 @@ var projects = [
 		texts: [
 
 		]
-	}
+	},
+	{
+		name: '',
+		id: 'eclipse',
+		classes: ['anim'],
+		imgs: [
+			''
+		],
+		texts: [
+
+		]
+	},
+	{
+		name: '',
+		id: 'eclipse',
+		classes: ['anim'],
+		imgs: [
+			''
+		],
+		texts: [
+
+		]
+	},
 
 
 

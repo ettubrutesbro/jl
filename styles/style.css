@@ -87,6 +87,7 @@ body{
 video {visibility: hidden; position: absolute; padding-top: 2rem;}
 
 #work {
+	position: relative;
 	/*display: flex; justify-content: space-between;*/
 	/*width: inherit;*/
 }

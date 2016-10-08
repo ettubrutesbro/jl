@@ -71,27 +71,44 @@ function Project(proj){ //pseudo class designed to take data and turn it into a 
 }
 
 function distribute(animated, proj){
-	var wid = document.body.offsetWidth,
-	allprojects = document.getElementsByClassName('project'),
-	projectwidth = allprojects[0].offsetWidth
+	var bodyWidth = document.body.offsetWidth,
+	projs = document.getElementsByClassName('project'),
+	projectWidth = projs[0].offsetWidth
 
-	if(wid >== projectwidth *4){
-		var margin = 
-		for(var i = 0; i<allprojects.length; i++){
-			allprojects[i]
-		}
-	}
 
-	var widb = wid, rowcount = 0
+	var projsPerRow = Math.floor(bodyWidth / projectWidth)
+	if(projsPerRow > 4) projsPerRow = 4
 
-	for(var i = 0; i<allprojects.length; i++){
-		console.log(wid / projectwidth)
-		if(widb >= projectwidth)
-		widb -= projectwidth
+	var margin = (bodyWidth - (projectWidth * projsPerRow)) / (projsPerRow-1)
+
+
+	var rowcount = 0, numOfRows = 0
+
+	for(var i = 0; i<projs.length; i++){
+		if(rowcount >= projsPerRow){ numOfRows++; rowcount = 0 }
+		projs[i].style.top = numOfRows * (projectWidth + margin)
+		projs[i].style.left = rowcount*(projectWidth) + rowcount*(margin)
 		rowcount++
-		// allprojects[i].style.width = document.body.clientWidth
-		// allprojects[i].style.height = document.body.clientHeight
 
+		// console.log( i*(projectWidth+margin) + projectWidth )
 	}
+	// if(wid >== projectWidth *4){
+	// 	var margin = 
+	// 	for(var i = 0; i<projs.length; i++){
+	// 		projs[i]
+	// 	}
+	// }
+
+	// var widb = wid, rowcount = 0
+
+	// for(var i = 0; i<projs.length; i++){
+	// 	console.log(wid / projectWidth)
+	// 	if(widb >= projectWidth)
+	// 	widb -= projectWidth
+	// 	rowcount++
+		// projs[i].style.width = document.body.clientWidth
+		// projs[i].style.height = document.body.clientHeight
+
+	// }
 
 }
