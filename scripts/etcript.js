@@ -68,6 +68,7 @@ function Project(proj){ //pseudo class designed to take data and turn it into a 
 
 	element.info = document.createElement('div')
 	element.info.className = 'info'
+	element.info.classList.add('preto')
 	// element.info.textContent = proj.info
 		for(var i = 0; i<proj.info.length; i++){
 			var paragraph = document.createElement('p')
@@ -87,9 +88,10 @@ function Project(proj){ //pseudo class designed to take data and turn it into a 
 		this.style.zIndex = 2
 
 		anim([this.picvid,this.info], { //needs to retain square scale
-			scaleX: proportions.xFill > proportions.yFill? 1/proportions.fillRatio : 1,
-			scaleY: proportions.yFill > proportions.xFill? 1/proportions.fillRatio : 1
+			scaleX: proportions.xFill > proportions.yFill? proportions.fillRatio : 1,
+			scaleY: proportions.yFill > proportions.xFill? proportions.fillRatio : 1
 		})
+
 		anim(this, {
 			translateX: '-=' + this.style.left,
 			translateY: '-=' + this.style.top,
@@ -133,26 +135,6 @@ function distribute(animated, proj){
 		// console.log( i*(projectWidth+margin) + projectWidth )
 	}
 
-
-	// if(wid >== projectWidth *4){
-	// 	var margin = 
-	// 	for(var i = 0; i<projs.length; i++){
-	// 		projs[i]
-	// 	}
-	// }
-
-	// var widb = wid, rowcount = 0
-
-	// for(var i = 0; i<projs.length; i++){
-	// 	console.log(wid / projectWidth)
-	// 	if(widb >= projectWidth)
-	// 	widb -= projectWidth
-	// 	rowcount++
-		// projs[i].style.width = document.body.clientWidth
-		// projs[i].style.height = document.body.clientHeight
-
-	// }
-
 }
 
 function calcProportions(){
@@ -174,9 +156,16 @@ function calcProportions(){
 		ps.fillRatio = 1 / (ps.yFill / ps.xFill)
 		ps.projectExpand = ps.project * ps.xFill
 	}
-	ps.fillRatio = ps.xFill>ps.yFill? ps.xFill / ps.yFill : ps.yFill/ps.xFill
-	ps.projectExpand = ps.project
-
+	ps.projectPicSize = Math.min(ps.project*ps.xFill, ps.project*ps.yFill)
 	proportions = ps
+
+	var infos = document.getElementsByClassName('info')
+	for(var i = 0; i<infos.length; i++){
+		//if it's horizontal (adjacent to square), use remaining width
+		infos[i].style.width = ((ps.bodyOffsetW - ps.projectPicSize) * (1/ ps.xFill)) / ps.fillRatio
+		infos[i].style.height = ps.projectPicSize * (1/ps.xFill) / ps.fillRatio
+		infos[i].style.left = (ps.projectPicSize / ps.xFill) 
+		//if it's vertical (below square)1, take up entire width
+	}
 
 }

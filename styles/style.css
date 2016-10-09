@@ -104,7 +104,7 @@ video {
 	width: 17.5rem; height: 17.5rem;
 	transform-origin: 0% 0%;
 	overflow: hidden;
-	/*box-shadow: inset 0 0 30px #ffffff;*/
+	box-shadow: 0 0 .35rem 1.5rem #ffffff;
 }
 	.project { background-color: white; }
 
@@ -114,7 +114,15 @@ video {
 	}
 	.project .info {
 		position: absolute;
-		right: 0;
-		font-size: .5rem;
-
+		right: 0; top: 0;
+		font-size: .325rem;
+		line-height: .5rem;
+		transform-origin: 0 0;
 	}
+		.info p{
+			padding: .3rem .45rem;
+			margin: 0;
+		}
+			.info p:first-child{
+				padding-top: .5rem;
+			}
