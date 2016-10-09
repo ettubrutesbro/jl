@@ -10,6 +10,9 @@ var vidarray = document.getElementsByTagName('video')
 
 var selectedProject = ''
 
+var proportions = { //table of values for transforms etc, recalc on resize
+}
+
 //TODO: wait until all videos are loaded before initializing any
 //also need to create an initialization animation
 
@@ -28,6 +31,7 @@ for(var i = 0; i<projects.length; i++){
 }
 
 distribute()
+calcProportions()
 
 window.addEventListener('click',function(){
 	console.log("u clicked somewhere")
@@ -53,11 +57,24 @@ function nextvid(){
 
 function Project(proj){ //pseudo class designed to take data and turn it into a DOM object
 
-	var element = document.createElement('div')
+	var element = document.createElement('article')
 	element.className = 'project'; element.id = proj.id
 	for(var i = 0; i<proj.classes.length; i++){
 		element.classList.add(proj.classes[i])
 	}
+	element.picvid = document.createElement('div')
+	element.picvid.className = 'picvid'
+	element.appendChild(element.picvid)
+
+	element.info = document.createElement('div')
+	element.info.className = 'info'
+	// element.info.textContent = proj.info
+		for(var i = 0; i<proj.info.length; i++){
+			var paragraph = document.createElement('p')
+			paragraph.textContent = proj.info[i]
+			element.info.appendChild(paragraph)
+		}
+	element.appendChild(element.info)
 
 	element.addEventListener('click',function(e){
 		console.log('you clicked '+ element.id)
@@ -67,20 +84,26 @@ function Project(proj){ //pseudo class designed to take data and turn it into a 
 	
 	element.expand = function(){
 		//set z-index
-		console.log('project width is ' + this.offsetWidth/$('work').offsetWidth + 'of parent' )
+		this.style.zIndex = 2
+
+		anim([this.picvid,this.info], { //needs to retain square scale
+			scaleX: proportions.xFill > proportions.yFill? 1/proportions.fillRatio : 1,
+			scaleY: proportions.yFill > proportions.xFill? 1/proportions.fillRatio : 1
+		})
 		anim(this, {
 			translateX: '-=' + this.style.left,
 			translateY: '-=' + this.style.top,
-			scaleX: 1 / (this.offsetWidth/$('work').offsetWidth), 
-			scaleY: 1 / (this.offsetHeight / (document.body.clientHeight-$('abt').offsetHeight))
+			scaleX: proportions.xFill, 
+			scaleY: proportions.yFill
 		})	
 		selectedProject = this.id
-		// this.style.width = $('work').clientWidth
-		// this.style.height = $('work').clientHeight
+
 	}
 
 	element.collapse = function(){
-		anim(this, {translateX: 0, translateY: 0, scaleX: 1, scaleY: 1})
+		anim(this, {translateX: 0, translateY: 0, scaleX: 1, scaleY: 1},
+			{complete: function(){element.style.zIndex = 1}})
+		anim(this.picvid, {scaleX: 1, scaleY: 1})
 		selectedProject = ''	
 	}
 
@@ -103,10 +126,14 @@ function distribute(animated, proj){
 		if(rowcount >= projsPerRow){ numOfRows++; rowcount = 0 }
 		projs[i].style.top = numOfRows * (projectWidth + margin)
 		projs[i].style.left = rowcount*(projectWidth) + rowcount*(margin)
+		projs[i].dataset.rowpos = rowcount
+		projs[i].dataset.row = numOfRows
 		rowcount++
 
 		// console.log( i*(projectWidth+margin) + projectWidth )
 	}
+
+
 	// if(wid >== projectWidth *4){
 	// 	var margin = 
 	// 	for(var i = 0; i<projs.length; i++){
@@ -125,5 +152,31 @@ function distribute(animated, proj){
 		// projs[i].style.height = document.body.clientHeight
 
 	// }
+
+}
+
+function calcProportions(){
+	var proto = document.getElementsByClassName('project')[0]
+	var ps = {
+		bodyOffsetW: document.body.offsetWidth,
+		bodyClientH: document.body.clientHeight,
+		project: proto.offsetWidth
+		
+	}
+
+	ps.xFill = 1 / (proto.offsetWidth / ps.bodyOffsetW),
+	ps.yFill = .75 / (ps.project / ps.bodyClientH)
+
+	if(ps.xFill > ps.yFill){ //screen is wider than tall
+		ps.fillRatio = 1 / (ps.xFill / ps.yFill)
+		ps.projectExpand = ps.project * ps.yFill
+	}else if(ps.yFill > ps.xFill){ // screen is taller than wide
+		ps.fillRatio = 1 / (ps.yFill / ps.xFill)
+		ps.projectExpand = ps.project * ps.xFill
+	}
+	ps.fillRatio = ps.xFill>ps.yFill? ps.xFill / ps.yFill : ps.yFill/ps.xFill
+	ps.projectExpand = ps.project
+
+	proportions = ps
 
 }

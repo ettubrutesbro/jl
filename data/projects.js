@@ -6,8 +6,9 @@ var projects = [
 		imgs: [
 			''
 		],
-		texts: [
-
+		info: [
+			'UX design, animation, and code prototyping for marketing data products on web/mobile, incl. dashboard 	customization workflows, user navigation, and first-time-user onboarding', 
+			'company\'s clients included Proctor & Gamble, Apple, Intel, Visa, and Ford'
 		]
 	},
 	{
@@ -17,7 +18,7 @@ var projects = [
 		imgs: [
 			''
 		],
-		texts: [
+		info: [
 
 		]
 	},
@@ -28,7 +29,7 @@ var projects = [
 		imgs: [
 			''
 		],
-		texts: [
+		info: [
 
 		]
 	},
@@ -39,29 +40,29 @@ var projects = [
 		imgs: [
 			''
 		],
-		texts: [
+		info: [
 
 		]
 	},
 	{
 		name: '',
-		id: 'eclipse',
+		id: 'sth1',
 		classes: ['anim'],
 		imgs: [
 			''
 		],
-		texts: [
+		info: [
 
 		]
 	},
 	{
 		name: '',
-		id: 'eclipse',
+		id: 'sth2',
 		classes: ['anim'],
 		imgs: [
 			''
 		],
-		texts: [
+		info: [
 
 		]
 	},

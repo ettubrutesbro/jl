@@ -7,6 +7,7 @@ propertyDefaults = [0,0,1,0], unitList = ['px','em','rem','%']
 
 window.addEventListener('scroll', throttle(updatePage, 10))
 initializePage()
+updatePage()
 
 /*
 	BUILDING THE PAGE:
