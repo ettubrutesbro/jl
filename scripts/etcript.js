@@ -1,10 +1,14 @@
 
-var $ = document.getElementById.bind(document)
+var $ = document.getElementById.bind(document),
+	anim = Velocity.bind(document)
+	
 
 var	loadedvids = 0
 	lastplayed = 3
 
 var vidarray = document.getElementsByTagName('video')
+
+var selectedProject = ''
 
 //TODO: wait until all videos are loaded before initializing any
 //also need to create an initialization animation
@@ -27,6 +31,7 @@ distribute()
 
 window.addEventListener('click',function(){
 	console.log("u clicked somewhere")
+	if(selectedProject) $(selectedProject).collapse()
 })
 
 
@@ -56,18 +61,30 @@ function Project(proj){ //pseudo class designed to take data and turn it into a 
 
 	element.addEventListener('click',function(e){
 		console.log('you clicked '+ element.id)
-		// this.expand()
+		if(!selectedProject) this.expand()
 		e.stopPropagation()
 	})
 	
-	// element.expand = function(){
-	// 	this.style.width = $('work').clientWidth
-	// 	this.style.height = $('work').clientHeight
+	element.expand = function(){
+		//set z-index
+		console.log('project width is ' + this.offsetWidth/$('work').offsetWidth + 'of parent' )
+		anim(this, {
+			translateX: '-=' + this.style.left,
+			translateY: '-=' + this.style.top,
+			scaleX: 1 / (this.offsetWidth/$('work').offsetWidth), 
+			scaleY: 1 / (this.offsetHeight / (document.body.clientHeight-$('abt').offsetHeight))
+		})	
+		selectedProject = this.id
+		// this.style.width = $('work').clientWidth
+		// this.style.height = $('work').clientHeight
+	}
 
-	// }
+	element.collapse = function(){
+		anim(this, {translateX: 0, translateY: 0, scaleX: 1, scaleY: 1})
+		selectedProject = ''	
+	}
 
 	return element
-
 }
 
 function distribute(animated, proj){
@@ -75,12 +92,10 @@ function distribute(animated, proj){
 	projs = document.getElementsByClassName('project'),
 	projectWidth = projs[0].offsetWidth
 
-
 	var projsPerRow = Math.floor(bodyWidth / projectWidth)
 	if(projsPerRow > 4) projsPerRow = 4
 
 	var margin = (bodyWidth - (projectWidth * projsPerRow)) / (projsPerRow-1)
-
 
 	var rowcount = 0, numOfRows = 0
 
