@@ -107,9 +107,6 @@ function updatePage(){
 				for(var ite = 0; ite<propertyList.length; ite++){ //per property (transforms) ops
 					var p = propertyList[ite]
 					if(obj[p] || obj[p]===0){ //if this object contains a property from property list...
-						
-
-						computedXform += ' '
 
 						var orig, d, unit = '' //these will eventually be pushed into xform
 
@@ -132,10 +129,12 @@ function updatePage(){
 						else if(Array.isArray(obj[p])) d = obj[p][1]
 						else d = obj[p]
 						d = orig - ((orig-d)*rangepct) + unit
-						computedXform += p + '(' + d + ')'
+						
 						if(p === 'opacity') tgt.style.opacity = d
+						else computedXform += p + '(' + d + ')'
 					}
 				}//end property computation
+				console.log(computedXform)
 				setXform(tgt, computedXform)
 			}//end element ops
 		}

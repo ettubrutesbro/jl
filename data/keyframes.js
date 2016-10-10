@@ -16,7 +16,8 @@ var ranges = [
 		objs: [
 			{
 				'target': 'jackleng',
-				'translateX': '-3rem'
+				'translateX': '-3rem',
+				'opacity': 0
 			},
 			{
 				'target': 'helloiam',
@@ -30,8 +31,7 @@ var ranges = [
 			},
 			{
 				'target': 'abtme',
-				'translateY': '-3.5rem',
-				// 'opacity': -1
+				'translateY': '-3.5rem'
 			}
 	
 		],
