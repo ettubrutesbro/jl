@@ -128,6 +128,7 @@ function distribute(animated, proj){
 		if(rowcount >= projsPerRow){ numOfRows++; rowcount = 0 }
 		projs[i].style.top = numOfRows * (projectWidth + margin)
 		projs[i].style.left = rowcount*(projectWidth) + rowcount*(margin)
+			// if(projsPerRow === 1){ projs[i].style.left }
 		projs[i].dataset.rowpos = rowcount
 		projs[i].dataset.row = numOfRows
 		rowcount++
@@ -138,33 +139,49 @@ function distribute(animated, proj){
 }
 
 function calcProportions(){
-	var proto = document.getElementsByClassName('project')[0]
+	var projs = document.getElementsByClassName('project')
 	var ps = {
 		bodyOffsetW: document.body.offsetWidth,
 		bodyClientH: document.body.clientHeight,
-		project: proto.offsetWidth
+		project: projs[0].offsetWidth
 		
 	}
 
-	ps.xFill = 1 / (proto.offsetWidth / ps.bodyOffsetW),
+	ps.xFill = 1 / (projs[0].offsetWidth / ps.bodyOffsetW),
 	ps.yFill = .75 / (ps.project / ps.bodyClientH)
 
 	if(ps.xFill > ps.yFill){ //screen is wider than tall
 		ps.fillRatio = 1 / (ps.xFill / ps.yFill)
-		ps.projectExpand = ps.project * ps.yFill
+		ps.projectExpand = ps.project * ps.xFill
 	}else if(ps.yFill > ps.xFill){ // screen is taller than wide
 		ps.fillRatio = 1 / (ps.yFill / ps.xFill)
-		ps.projectExpand = ps.project * ps.xFill
+		ps.projectExpand = ps.project * ps.yFill
 	}
 	ps.projectPicSize = Math.min(ps.project*ps.xFill, ps.project*ps.yFill)
+	ps.abtH = $('abt').offsetHeight + document.getElementsByTagName('video')[0].offsetHeight
+		$('abt').style.height = ps.abtH
+	ps.workH = Number(projs[projs.length-1].style.top.replace(/[^\d.-]/g, '')) + ps.project 
+		$('work').style.height = ps.workH
+
+
+
+
 	proportions = ps
 
 	var infos = document.getElementsByClassName('info')
 	for(var i = 0; i<infos.length; i++){
 		//if it's horizontal (adjacent to square), use remaining width
-		infos[i].style.width = ((ps.bodyOffsetW - ps.projectPicSize) * (1/ ps.xFill)) / ps.fillRatio
-		infos[i].style.height = ps.projectPicSize * (1/ps.xFill) / ps.fillRatio
-		infos[i].style.left = (ps.projectPicSize / ps.xFill) 
+		if(ps.xFill > ps.yFill){
+			infos[i].style.width = ((ps.bodyOffsetW - ps.projectPicSize) * (1/ ps.xFill)) / ps.fillRatio
+			infos[i].style.height = ps.projectPicSize * (1/ps.xFill) / ps.fillRatio
+			infos[i].style.left = (ps.projectPicSize / ps.xFill) 
+		}
+		else if(ps.yFill > ps.xFill){
+			infos[i].style.width = ps.projectPicSize * (1/ps.yFill) / ps.fillRatio
+			infos[i].style.height = (ps.projectExpand - ps.projectPicSize) * (1/ps.yFill) / ps.fillRatio
+			infos[i].style.top = (ps.projectPicSize / ps.yFill)
+		}
+		
 		//if it's vertical (below square)1, take up entire width
 	}
 

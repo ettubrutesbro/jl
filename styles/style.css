@@ -92,8 +92,7 @@ video {
 }
 
 #work {
-	position: fixed;
-	/*display: flex; justify-content: space-between;*/
+	position: fixed; top: 11rem;
 	width: inherit;
 	margin-top: 2rem;
 }
@@ -104,13 +103,14 @@ video {
 	width: 17.5rem; height: 17.5rem;
 	transform-origin: 0% 0%;
 	overflow: hidden;
-	box-shadow: 0 0 .35rem 1.5rem #ffffff;
+	/*box-shadow: 0 0 .35rem 1.5rem #ffffff;*/
 }
 	.project { background-color: white; }
 
 	.project .picvid {
 		/*top: -50%;*/
 		background-color: black;
+		z-index: 1;
 	}
 	.project .info {
 		position: absolute;

@@ -144,8 +144,12 @@ function setXform(element, value){
 function scrollProgress() {
 	//returns what percentage of window inner height the user has scrolled to (100s)
  	return (((document.body.scrollTop/(document.body.scrollHeight - document.body.clientHeight)) * (document.body.offsetHeight / initialHt)) * 100).toFixed(1)/1
+
+ 	//or returns pixels 
 }
 
 
 
-
+function pxProgress(){
+	//return how many pixels down from top the user is
+}
