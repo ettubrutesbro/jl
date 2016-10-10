@@ -2,8 +2,8 @@ var initialHt = window.innerHeight, //on resize, this should be reset
 currentkey = 0,
 sumPrevScrolls = 0
 
-var propertyList = ['translateX', 'translateY', 'scale', 'rotate'],
-propertyDefaults = [0,0,1,0], unitList = ['px','em','rem','%']
+var propertyList = ['translateX', 'translateY', 'scale','rotate','opacity'],
+propertyDefaults = [0,0,1,0,1], unitList = ['px','em','rem','%']
 
 window.addEventListener('scroll', throttle(updatePage, 10))
 initializePage()
@@ -28,7 +28,7 @@ function initializePage(){
 	// 	totalScroll += Number(keyframes[i].scrollTarget)/100 * window.innerHeight
 	// }
 
-	document.body.style.height = window.innerHeight * (rangeEnd/100)	
+	document.body.style.height = $('abt').offsetHeight + $('work').offsetHeight * 2
 }
 function setupValues(){
 	windowWidth = window.innerWidth
@@ -39,7 +39,7 @@ function updatePage(){
 	// and that % multiplies by the supplied property value of that keyframe for the targeted element
 	window.requestAnimationFrame(function(){
 
-		var prog = scrollProgress()
+		var prog = window.scrollY
 
 		for(var i = 0; i<ranges.length; i++){ //per range ops
 			var r = ranges[i]
@@ -94,7 +94,7 @@ function updatePage(){
 				}
 			}
 			//PROGRESSING THRU RANGE: CALCULATING PROPERTY VALUES BASED ON "RANGEPCT"
-			var rangepct = (scrollProgress() - r.rg[0]) / (r.rg[1] - r.rg[0])
+			var rangepct = (window.scrollY - r.rg[0]) / (r.rg[1] - r.rg[0])
 
 			for(var it = 0; it<r.objs.length; it++){ //per element ops
 
@@ -102,14 +102,22 @@ function updatePage(){
 				var computedXform = '' //string stores transform values, to be pushed after
 				var tgt = $(obj.target)
 
+
+
 				for(var ite = 0; ite<propertyList.length; ite++){ //per property (transforms) ops
 					var p = propertyList[ite]
+					if(obj[p] || obj[p]===0){ //if this object contains a property from property list...
+						
 
-					if(obj[p]){ //if this object contains a property from property list...
 						computedXform += ' '
 
-						var orig = Array.isArray(obj[p])? Number(obj[p][0].replace(/[^\d.-]/g, '')) : propertyDefaults[ite], 
-						d, unit = '' //these will eventually be pushed into xform
+						var orig, d, unit = '' //these will eventually be pushed into xform
+
+						if(Array.isArray(obj[p])){
+							if(typeof obj[p][0] === 'string') orig = Number(obj[p][0].replace(/[^\d.-]/g, ''))
+							else orig = obj[p][0]
+						}
+						else orig = propertyDefaults[ite]
 
 						if(typeof obj[p] === 'string' || typeof obj[p][1] === 'string'){ //accounts for units ('px' etc)
 							if(Array.isArray(obj[p])) d = obj[p][1]//use obj[p][0] instead of obj[p]
@@ -125,10 +133,7 @@ function updatePage(){
 						else d = obj[p]
 						d = orig - ((orig-d)*rangepct) + unit
 						computedXform += p + '(' + d + ')'
-
-
-
-
+						if(p === 'opacity') tgt.style.opacity = d
 					}
 				}//end property computation
 				setXform(tgt, computedXform)
@@ -137,19 +142,5 @@ function updatePage(){
 	})
 }
 
-function setXform(element, value){
-	element.style.webkitTransform = element.style.mozTransform = element.style.transform =
-	element.style.msTransform = element.style.oTransform = value
-}
-function scrollProgress() {
-	//returns what percentage of window inner height the user has scrolled to (100s)
- 	return (((document.body.scrollTop/(document.body.scrollHeight - document.body.clientHeight)) * (document.body.offsetHeight / initialHt)) * 100).toFixed(1)/1
-
- 	//or returns pixels 
-}
 
 
-
-function pxProgress(){
-	//return how many pixels down from top the user is
-}

@@ -8,7 +8,9 @@ var	loadedvids = 0
 
 var vidarray = document.getElementsByTagName('video')
 
-var selectedProject = ''
+
+var selectedProject = '',
+workEnabled = false //can user click project yet
 
 var proportions = { //table of values for transforms etc, recalc on resize
 }
@@ -29,6 +31,7 @@ for(var i = 0; i<projects.length; i++){
 	var project = new Project(projects[i])
 	$('work').appendChild(project)
 }
+var projs = document.getElementsByClassName('project')
 
 distribute()
 calcProportions()
@@ -63,11 +66,11 @@ function Project(proj){ //pseudo class designed to take data and turn it into a 
 		element.classList.add(proj.classes[i])
 	}
 	element.picvid = document.createElement('div')
-	element.picvid.className = 'picvid'
+	element.picvid.className = 'picvid'; element.picvid.id = proj.id+'_picvid'
 	element.appendChild(element.picvid)
 
 	element.info = document.createElement('div')
-	element.info.className = 'info'
+	element.info.className = 'info'; element.info.id = proj.id + '_info'
 	element.info.classList.add('preto')
 	// element.info.textContent = proj.info
 		for(var i = 0; i<proj.info.length; i++){
@@ -84,6 +87,7 @@ function Project(proj){ //pseudo class designed to take data and turn it into a 
 	})
 	
 	element.expand = function(){
+		if(!workEnabled) return
 		//set z-index
 		this.style.zIndex = 2
 
@@ -139,7 +143,6 @@ function distribute(animated, proj){
 }
 
 function calcProportions(){
-	var projs = document.getElementsByClassName('project')
 	var ps = {
 		bodyOffsetW: document.body.offsetWidth,
 		bodyClientH: document.body.clientHeight,
@@ -159,30 +162,35 @@ function calcProportions(){
 	}
 	ps.projectPicSize = Math.min(ps.project*ps.xFill, ps.project*ps.yFill)
 	ps.abtH = $('abt').offsetHeight + document.getElementsByTagName('video')[0].offsetHeight
-		$('abt').style.height = ps.abtH
 	ps.workH = Number(projs[projs.length-1].style.top.replace(/[^\d.-]/g, '')) + ps.project 
-		$('work').style.height = ps.workH
+		
+	
 
-
-
-
-	proportions = ps
+	$('abt').style.height = ps.abtH
+	$('work').style.height = ps.workH
 
 	var infos = document.getElementsByClassName('info')
 	for(var i = 0; i<infos.length; i++){
-		//if it's horizontal (adjacent to square), use remaining width
-		if(ps.xFill > ps.yFill){
+		if(ps.xFill > ps.yFill){ //if it's horizontal (adjacent to square), use remaining width
 			infos[i].style.width = ((ps.bodyOffsetW - ps.projectPicSize) * (1/ ps.xFill)) / ps.fillRatio
 			infos[i].style.height = ps.projectPicSize * (1/ps.xFill) / ps.fillRatio
 			infos[i].style.left = (ps.projectPicSize / ps.xFill) 
 		}
-		else if(ps.yFill > ps.xFill){
+		else if(ps.yFill > ps.xFill){ //if it's vertical (below square), take up entire width
 			infos[i].style.width = ps.projectPicSize * (1/ps.yFill) / ps.fillRatio
 			infos[i].style.height = (ps.projectExpand - ps.projectPicSize) * (1/ps.yFill) / ps.fillRatio
 			infos[i].style.top = (ps.projectPicSize / ps.yFill)
 		}
 		
-		//if it's vertical (below square)1, take up entire width
+		
+
 	}
 
+proportions = ps //set global variable
+
+}
+
+function setXform(element, value){
+	element.style.webkitTransform = element.style.mozTransform = element.style.transform =
+	element.style.msTransform = element.style.oTransform = value
 }
