@@ -17,12 +17,14 @@ var ranges = [
 			{
 				'target': 'jackleng',
 				'translateX': '-3rem',
-				'opacity': 0
+				'opacity': 0,
+				'ease': false
 			},
 			{
 				'target': 'helloiam',
 				'translateX': '-1.75rem',
-				'opacity': -1
+				'opacity': -1,
+				'ease': false
 
 			},
 			{
@@ -39,21 +41,25 @@ var ranges = [
 	},
 
 	{
-		rg: [$('abt').offsetHeight/3, $('abt').offsetHeight/1.5],
+		rg: [0, $('abt').offsetHeight/1.5],
 		objs: [
 			{
 				'target': 'facebg',
 				'translateX': $('abt').offsetWidth/2 - $('facefg').offsetWidth/2 + 'px',
+				'ease': true
 				// 'translateX': '300px'
 			},
 			{
 				'target': 'facefg',
 				'translateX': $('abt').offsetWidth/2 - $('facefg').offsetWidth/2 + 'px',
+				'ease': true
 				// 'translateX': '300px'
 			},
 			{
 				'target': 'work',
-				'translateY': ['60rem', '0rem']
+				'translateY': ['40rem', '0rem'],
+				'opacity': [0,2],
+				'ease': true
 			}
 		],
 		active:false,
@@ -88,7 +94,7 @@ function projectPicVidFrames(){
 	for(var i = 0; i<projs.length; i++){
 		if(i % 4 === 0 && i>0) { console.log('resetting arrays'); canuse = dontuse; dontuse = [] }
 		var attr = canuse.length > 1? Math.floor(Math.random()*(canuse.length)): 0
-		var addobj = {'target': projs[i].picvid.id}
+		var addobj = {'target': projs[i].picvid.id, 'ease': true}
 		addobj[canuse[attr][0]] = canuse[attr][1]
 		
 		dontuse.push(canuse[attr])

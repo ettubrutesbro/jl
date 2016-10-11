@@ -95,6 +95,7 @@ function updatePage(){
 			}
 			//PROGRESSING THRU RANGE: CALCULATING PROPERTY VALUES BASED ON "RANGEPCT"
 			var rangepct = (window.scrollY - r.rg[0]) / (r.rg[1] - r.rg[0])
+			console.log(rangepct)
 
 			for(var it = 0; it<r.objs.length; it++){ //per element ops
 
@@ -128,7 +129,9 @@ function updatePage(){
 						}
 						else if(Array.isArray(obj[p])) d = obj[p][1]
 						else d = obj[p]
-						d = orig - ((orig-d)*rangepct) + unit
+
+						if(obj.ease) d = easeInOutQuad(rangepct, orig, d-orig , 1) + unit
+						else if(!obj.ease) d = orig - ((orig-d)*rangepct) + unit
 						
 						if(p === 'opacity') tgt.style.opacity = d
 						else computedXform += p + '(' + d + ')'
@@ -142,4 +145,12 @@ function updatePage(){
 }
 
 
+// easeInOutQuad(rangepct)
 
+
+// t: current time, b: begInnIng value, c: change In value, d: duration
+
+	function easeInOutQuad(t,b,c,d){
+		if ((t/=d/2) < 1) return c/2*t*t + b;
+		return -c/2 * ((--t)*(t-2) - 1) + b;
+	}
