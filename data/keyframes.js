@@ -5,7 +5,7 @@ var rangeEnd = 200
 var milestones = []
 var ranges = [
 	{
-		rg: [0,$('abt').offsetHeight/3], //range should be able to be set
+		rg: [0,$('abt').offsetHeight/2.5], //range should be able to be set
 		//as a % of (maybe dynamic pixel value
 		// that changes with resize?)
 
@@ -16,8 +16,7 @@ var ranges = [
 		objs: [
 			{
 				'target': 'jackleng',
-				'translateX': '-3rem',
-				'opacity': 0
+				'translateX': '-3rem'
 			},
 			{
 				'target': 'helloiam',
@@ -31,7 +30,7 @@ var ranges = [
 			},
 			{
 				'target': 'abtme',
-				'translateY': '-2rem',
+				'translateY': '-3rem',
 				'opacity': -.5
 			},
 			
@@ -51,48 +50,55 @@ var ranges = [
 		]
 	},
 	{
-		rg: [$('abt').offsetHeight/1.75, $('abt').offsetHeight],
+		rg: [$('abt').offsetHeight/1.6, $('abt').offsetHeight],
 		objs: [
 			{
 				'target': 'dream',
 				'translateY': ['130%','200%'],
-				'opacity': -1
+				'opacity': -0.5
 			},
 			{
 				'target': 'videocaption',
 				'translateY': ['0%','-90%'],
-				'opacity': -1
+				'opacity': -0.5
 			}
 		]
 	},
 	{
-		rg: [0, $('abt').offsetHeight/1.2],
+		rg: [0, $('abt').offsetHeight/3.25],
+		objs: [
+			{
+				'target': 'facebg',
+				'translateY': [window.getComputedStyle($('abt')).top, window.getComputedStyle($('abt')).top],
+				'ease': 'inOutQuad'
+			},
+			{
+				'target': 'facefg',
+				'translateY': [window.getComputedStyle($('abt')).top, window.getComputedStyle($('abt')).top],
+				'ease': 'inOutQuad'
+			},
+		]
+	},
+	{
+		rg: [$('abt').offsetHeight/2, $('abt').offsetHeight],
 		objs: [
 			{
 				'target': 'facebg',
 				'translateX': $('abt').offsetWidth/2 - $('facefg').offsetWidth/2 + 'px',
 				'translateY': [window.getComputedStyle($('abt')).top, '0px'],
-				'ease': 'inOutQuad'
+				'ease': 'outQuad'
 			},
 			{
 				'target': 'facefg',
-				'translateX': $('abt').offsetWidth/2 - $('facefg').offsetWidth/2 + 'px',
+				'translateX':$('abt').offsetWidth/2 - $('facefg').offsetWidth/2 + 'px',
 				'translateY': [window.getComputedStyle($('abt')).top, '0px'],
 				'ease': 'inOutQuad'
 			},
-		]
-	
-		
-
-	},
-	{
-		rg: [$('abt').offsetHeight/2.5, $('abt').offsetHeight],
-		objs: [
 			{
 				'target': 'work',
-				'translateY': ['40rem', '0rem'],
-				'ease': 'inOutQuad',
-				'opacity': [0,2]
+				'translateY': ['40rem', '2rem'],
+				'ease': 'outQuad',
+				'opacity': [0,1.5]
 			},
 
 		],
@@ -128,12 +134,12 @@ function projectPicVidFrames(){
 		var addobj = {'target': projs[i].picvid.id, 'ease': 'inOutQuad'}
 		addobj[canuse[attr][0]] = canuse[attr][1]
 		var randRot = Math.random() > 0.5 ? 1: -1
-		randRot = (Math.random() * randRot) * 75
+		randRot = (Math.random() * randRot) * 45
 		addobj.rotate = [randRot+'deg', '0deg']
 		
 		dontuse.push(canuse[attr])
 		canuse.splice(attr,1)
 
-		ranges[3].objs.push(addobj)
+		ranges[4].objs.push(addobj)
 	}
 }

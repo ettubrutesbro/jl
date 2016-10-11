@@ -57,6 +57,7 @@ body{
 	}
 
 #abt {
+	/*overflow-x: hidden;*/
 	position: relative;
 	top: 10rem;
 	width: inherit;
