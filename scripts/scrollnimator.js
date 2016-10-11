@@ -58,7 +58,8 @@ function updatePage(){
 							p = propertyList[ite]
 							if(obj[p]){
 								var v = Array.isArray(obj[p])? obj[p][1] : obj[p]
-								computedXform+= ' '+p+'('+v+')'
+								if(p=== 'opacity') tgt.style.opacity = v
+								else computedXform+= ' '+p+'('+v+')'
 							}
 						}
 						setXform(tgt,computedXform)
@@ -79,7 +80,8 @@ function updatePage(){
 							p = propertyList[ite]
 							if(obj[p]){
 								var v = Array.isArray(obj[p])? obj[p][0] : propertyDefaults[ite]
-								computedXform+= ' '+p+'('+v+')'
+								if(p=== 'opacity') tgt.style.opacity = v
+								else computedXform+= ' '+p+'('+v+')'
 							}
 						}
 						setXform(tgt,computedXform)

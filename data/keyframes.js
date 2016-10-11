@@ -17,14 +17,12 @@ var ranges = [
 			{
 				'target': 'jackleng',
 				'translateX': '-3rem',
-				'opacity': 0,
-				'ease': false
+				'opacity': 0
 			},
 			{
 				'target': 'helloiam',
 				'translateX': '-1.75rem',
-				'opacity': -1,
-				'ease': false
+				'opacity': -1
 
 			},
 			{
@@ -33,49 +31,81 @@ var ranges = [
 			},
 			{
 				'target': 'abtme',
-				'translateY': '-3.5rem'
-			}
-	
+				'translateY': '-2rem',
+				'opacity': -.5
+			},
+			
 		],
-		active: false
 	},
-
 	{
-		rg: [200, $('abt').offsetHeight/1.2],
+		rg: [0, $('abt').offsetHeight/3.15],
+		objs: [
+			{
+				'target': 'dream',
+				'translateY': ['0%','130%']
+			},
+			{
+				'target': 'videocaption',
+				'translateY': ['200%','0%']
+			}
+		]
+	},
+	{
+		rg: [$('abt').offsetHeight/1.75, $('abt').offsetHeight],
+		objs: [
+			{
+				'target': 'dream',
+				'translateY': ['130%','200%'],
+				'opacity': -1
+			},
+			{
+				'target': 'videocaption',
+				'translateY': ['0%','-90%'],
+				'opacity': -1
+			}
+		]
+	},
+	{
+		rg: [0, $('abt').offsetHeight/1.2],
 		objs: [
 			{
 				'target': 'facebg',
 				'translateX': $('abt').offsetWidth/2 - $('facefg').offsetWidth/2 + 'px',
+				'translateY': [window.getComputedStyle($('abt')).top, '0px'],
 				'ease': 'inOutQuad'
-				// 'translateX': '300px'
 			},
 			{
 				'target': 'facefg',
 				'translateX': $('abt').offsetWidth/2 - $('facefg').offsetWidth/2 + 'px',
+				'translateY': [window.getComputedStyle($('abt')).top, '0px'],
 				'ease': 'inOutQuad'
-				// 'translateX': '300px'
 			},
+		]
+	
+		
+
+	},
+	{
+		rg: [$('abt').offsetHeight/2.5, $('abt').offsetHeight],
+		objs: [
 			{
 				'target': 'work',
 				'translateY': ['40rem', '0rem'],
 				'ease': 'inOutQuad',
-				'opacity': [0,3]
-			}
+				'opacity': [0,2]
+			},
 
 		],
-		active:false,
-	
 		callforward: function(){
-			$('work').style.display = 'none'
+			$('work').style.visibility = 'hidden'
 		},
 		callduring: function(){
-			$('work').style.display = 'block'
+			$('work').style.visibility = 'visible'
 			workEnabled = false
 		},
 		callback: function(){
-			workEnabled = 'inOutQuad'
+			workEnabled = true
 		}
-
 	}
 
 
@@ -98,12 +128,12 @@ function projectPicVidFrames(){
 		var addobj = {'target': projs[i].picvid.id, 'ease': 'inOutQuad'}
 		addobj[canuse[attr][0]] = canuse[attr][1]
 		var randRot = Math.random() > 0.5 ? 1: -1
-		randRot = (Math.random() * randRot) * 45
+		randRot = (Math.random() * randRot) * 75
 		addobj.rotate = [randRot+'deg', '0deg']
 		
 		dontuse.push(canuse[attr])
 		canuse.splice(attr,1)
 
-		ranges[1].objs.push(addobj)
+		ranges[3].objs.push(addobj)
 	}
 }

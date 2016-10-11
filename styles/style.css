@@ -57,6 +57,8 @@ body{
 	}
 
 #abt {
+	position: relative;
+	top: 10rem;
 	width: inherit;
 	right: 0; left: 0; margin: 0rem auto 0 auto;
 }
@@ -90,9 +92,35 @@ video {
 	position: absolute; 
 	padding-top: 2rem;
 	width: inherit;
+	z-index: 1;
 }
+#dream{
+	position: absolute;
+	width: 50%;
+	font-size: 1.25rem;
+	line-height: 1.9rem;
+	bottom: 0;
+}
+#videocaption{
+	color: rgba(0,0,0,0);
+	width: 45%;
+	position: absolute;
+	bottom: 0; right: 1.5rem;
+	z-index: 3;
+	font-size: 1.25rem; line-height: 1.9rem;
+}
+	#videocaption p{
+		right: 0;
+		visibility: hidden;
+		color: white;
+		text-align: right;
+		position: absolute;
+		bottom: 0;
+	}
+
 
 #work {
+	visibility: hidden;
 	position: fixed; top: 11rem;
 	width: inherit;
 	margin-top: 2rem;

@@ -52,6 +52,8 @@ function nextvid(){
 	vidarray[newvid].play()
 	vidarray[lastplayed].style.visibility = 'hidden'
 	vidarray[newvid].style.visibility = 'visible'
+	document.getElementsByClassName('videocaption')[lastplayed].style.visibility = 'hidden'
+	document.getElementsByClassName('videocaption')[newvid].style.visibility = 'visible'
 	
 	lastplayed = newvid
 
@@ -75,7 +77,7 @@ function Project(proj){ //pseudo class designed to take data and turn it into a 
 	// element.info.textContent = proj.info
 		for(var i = 0; i<proj.info.length; i++){
 			var paragraph = document.createElement('p')
-			paragraph.textContent = proj.info[i]
+			paragraph.innerHTML = proj.info[i]
 			element.info.appendChild(paragraph)
 		}
 	element.appendChild(element.info)
