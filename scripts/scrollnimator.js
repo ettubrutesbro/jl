@@ -3,7 +3,7 @@ currentkey = 0,
 sumPrevScrolls = 0
 
 var propertyList = ['translateX', 'translateY', 'scale','rotate','opacity'],
-propertyDefaults = [0,0,1,0,1], unitList = ['px','em','rem','%']
+propertyDefaults = [0,0,1,0,1], unitList = ['px','em','rem','%','deg']
 
 window.addEventListener('scroll', throttle(updatePage, 10))
 initializePage()
@@ -130,11 +130,11 @@ function updatePage(){
 						else if(Array.isArray(obj[p])) d = obj[p][1]
 						else d = obj[p]
 
-						if(obj.ease) d = easeInOutQuad(rangepct, orig, d-orig , 1) + unit
+						if(obj.ease) d = easings[obj.ease](rangepct, orig, d-orig , 1) + unit
 						else if(!obj.ease) d = orig - ((orig-d)*rangepct) + unit
 						
 						if(p === 'opacity') tgt.style.opacity = d
-						else computedXform += p + '(' + d + ')'
+						else computedXform +=' '+ p + '(' + d + ')'
 					}
 				}//end property computation
 				console.log(computedXform)

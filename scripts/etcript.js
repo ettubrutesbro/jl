@@ -90,8 +90,10 @@ function Project(proj){ //pseudo class designed to take data and turn it into a 
 		if(!workEnabled) return
 		//set z-index
 		this.style.zIndex = 2
+		this.style.backgroundColor = 'white'
+		this.info.style.visibility = 'visible'
 
-		anim([this.picvid,this.info], { //needs to retain square scale
+		anim(this.picvid, { //needs to retain square scale
 			scaleX: proportions.xFill > proportions.yFill? proportions.fillRatio : 1,
 			scaleY: proportions.yFill > proportions.xFill? proportions.fillRatio : 1
 		})
@@ -107,9 +109,11 @@ function Project(proj){ //pseudo class designed to take data and turn it into a 
 	}
 
 	element.collapse = function(){
-		anim(this, {translateX: 0, translateY: 0, scaleX: 1, scaleY: 1},
-			{complete: function(){element.style.zIndex = 1}})
-		anim(this.picvid, {scaleX: 1, scaleY: 1})
+
+		anim(this, {translateX: 0, translateY: 0, scaleX: 1, scaleY: 1, backgroundColorAlpha: 0},
+			{complete: function(){element.style.zIndex = 1; element.style.backgroundColor = ''}})
+		anim(this.picvid, {scaleX: 1, scaleY: 1}, 
+			{complete: function(){element.info.style.visibility = 'hidden'}})
 		selectedProject = ''	
 	}
 
@@ -174,12 +178,14 @@ function calcProportions(){
 		if(ps.xFill > ps.yFill){ //if it's horizontal (adjacent to square), use remaining width
 			infos[i].style.width = ((ps.bodyOffsetW - ps.projectPicSize) * (1/ ps.xFill)) / ps.fillRatio
 			infos[i].style.height = ps.projectPicSize * (1/ps.xFill) / ps.fillRatio
-			infos[i].style.left = (ps.projectPicSize / ps.xFill) 
+			infos[i].style.left = (ps.projectPicSize / ps.xFill)
+			setXform(infos[i], 'scaleX('+ps.fillRatio+')') 
 		}
 		else if(ps.yFill > ps.xFill){ //if it's vertical (below square), take up entire width
 			infos[i].style.width = ps.projectPicSize * (1/ps.yFill) / ps.fillRatio
 			infos[i].style.height = (ps.projectExpand - ps.projectPicSize) * (1/ps.yFill) / ps.fillRatio
 			infos[i].style.top = (ps.projectPicSize / ps.yFill)
+			setXform(infos[i], 'scaleY('+ps.fillRatio+')')
 		}
 		
 		
