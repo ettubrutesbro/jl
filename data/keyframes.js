@@ -5,7 +5,7 @@ var rangeEnd = 200
 var milestones = []
 var ranges = [
 	{
-		rg: [0,$('abt').offsetHeight/2.5], //range should be able to be set
+		rg: [1,1.6], //range should be able to be set
 		//as a % of (maybe dynamic pixel value
 		// that changes with resize?)
 
@@ -37,7 +37,7 @@ var ranges = [
 		],
 	},
 	{
-		rg: [0, $('abt').offsetHeight/3.15],
+		rg: [1,1.75],
 		objs: [
 			{
 				'target': 'dream',
@@ -50,7 +50,16 @@ var ranges = [
 		]
 	},
 	{
-		rg: [$('abt').offsetHeight/1.6, $('abt').offsetHeight],
+		rg: [1,4],
+		objs: [
+			{
+				'target': 'abt',
+				'translateY': '325%'
+			}
+		]
+	},
+	{
+		rg: [4,6],
 		objs: [
 			{
 				'target': 'dream',
@@ -65,7 +74,7 @@ var ranges = [
 		]
 	},
 	{
-		rg: [0, $('abt').offsetHeight/3.25],
+		rg: [1, 2],
 		objs: [
 			{
 				'target': 'facebg',
@@ -80,7 +89,7 @@ var ranges = [
 		]
 	},
 	{
-		rg: [$('abt').offsetHeight/2, $('abt').offsetHeight],
+		rg: [2, 3],
 		objs: [
 			{
 				'target': 'facebg',
@@ -140,6 +149,6 @@ function projectPicVidFrames(){
 		dontuse.push(canuse[attr])
 		canuse.splice(attr,1)
 
-		ranges[4].objs.push(addobj)
+		ranges[5].objs.push(addobj)
 	}
 }

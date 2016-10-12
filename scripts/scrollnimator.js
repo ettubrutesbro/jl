@@ -27,19 +27,23 @@ function initializePage(){
 	// for(var i=0; i<keyframes.length; i++){
 	// 	totalScroll += Number(keyframes[i].scrollTarget)/100 * window.innerHeight
 	// }
+	var allEnds = []
+	for(var i = 0; i<ranges.length; i++){
+		allEnds.push(ranges[i].rg[1])
+	}
+	console.log('highest range ending was '+ Math.max(...allEnds))
+	proportions.bodyOffsetH = document.body.style.height = Math.max(...allEnds) * window.innerHeight
 
-	document.body.style.height = $('abt').offsetHeight + $('work').offsetHeight * 2
-}
-function setupValues(){
-	windowWidth = window.innerWidth
-	windowHeight = window.innerHeight
+	// document.body.style.height = $('abt').offsetHeight + $('work').offsetHeight * 2
 }
 function updatePage(){
 	// during any keyframe , we look at what % scrollProgress is of the keyframe's 'scrollTarget', 
 	// and that % multiplies by the supplied property value of that keyframe for the targeted element
 	window.requestAnimationFrame(function(){
 
-		var prog = window.scrollY
+		var prog = (window.pageYOffset + proportions.bodyClientH) / proportions.bodyClientH
+		// console.log(document.scrollY)
+		console.log(prog)
 
 		for(var i = 0; i<ranges.length; i++){ //per range ops
 			var r = ranges[i]
@@ -96,7 +100,8 @@ function updatePage(){
 				}
 			}
 			//PROGRESSING THRU RANGE: CALCULATING PROPERTY VALUES BASED ON "RANGEPCT"
-			var rangepct = (window.scrollY - r.rg[0]) / (r.rg[1] - r.rg[0])
+			// var rangepct = (window.scrollY - r.rg[0]) / (r.rg[1] - r.rg[0])
+			var rangepct = (prog - r.rg[0]) / (r.rg[1] - r.rg[0]) 
 			console.log(rangepct)
 
 			for(var it = 0; it<r.objs.length; it++){ //per element ops
@@ -139,8 +144,7 @@ function updatePage(){
 						else computedXform +=' '+ p + '(' + d + ')'
 					}
 				}//end property computation
-				console.log(computedXform)
-				setXform(tgt, computedXform)
+				setXform(tgt, computedXform)	
 			}//end element ops
 		}
 	})

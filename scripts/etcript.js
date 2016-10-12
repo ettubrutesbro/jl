@@ -41,8 +41,6 @@ window.addEventListener('click',function(){
 	if(selectedProject) $(selectedProject).collapse()
 })
 
-
-
 //TODO: nextvid needs to count 2 back, so it doesn't play the same one or the previous one again
 
 function nextvid(){
@@ -145,7 +143,6 @@ function distribute(animated, proj){
 
 		// console.log( i*(projectWidth+margin) + projectWidth )
 	}
-
 }
 
 function calcProportions(){
@@ -153,7 +150,6 @@ function calcProportions(){
 		bodyOffsetW: document.body.offsetWidth,
 		bodyClientH: document.body.clientHeight,
 		project: projs[0].offsetWidth
-		
 	}
 
 	ps.xFill = 1 / (projs[0].offsetWidth / ps.bodyOffsetW),
@@ -169,8 +165,6 @@ function calcProportions(){
 	ps.projectPicSize = Math.min(ps.project*ps.xFill, ps.project*ps.yFill)
 	ps.abtH = $('abt').offsetHeight + document.getElementsByTagName('video')[0].offsetHeight
 	ps.workH = Number(projs[projs.length-1].style.top.replace(/[^\d.-]/g, '')) + ps.project 
-		
-	
 
 	$('abt').style.height = ps.abtH
 	$('work').style.height = ps.workH
@@ -189,9 +183,6 @@ function calcProportions(){
 			infos[i].style.top = (ps.projectPicSize / ps.yFill)
 			setXform(infos[i], 'scaleY('+ps.fillRatio+')')
 		}
-		
-		
-
 	}
 
 proportions = ps //set global variable
