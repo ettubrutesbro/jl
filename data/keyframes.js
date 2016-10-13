@@ -37,7 +37,7 @@ var ranges = [
 		],
 	},
 	{
-		rg: [1,1.75],
+		rg: [1,1.35],
 		objs: [
 			{
 				'target': 'dream',
@@ -54,12 +54,12 @@ var ranges = [
 		objs: [
 			{
 				'target': 'abt',
-				'translateY': '325%'
+				'translateY': '285%'
 			}
 		]
 	},
 	{
-		rg: [4,6],
+		rg: [1.6,2.1],
 		objs: [
 			{
 				'target': 'dream',
@@ -74,38 +74,55 @@ var ranges = [
 		]
 	},
 	{
-		rg: [1, 2],
+		rg: [1, 1.25],
 		objs: [
 			{
 				'target': 'facebg',
-				'translateY': [window.getComputedStyle($('abt')).top, window.getComputedStyle($('abt')).top],
+				'translateY': ['100%', '100%'],
 				'ease': 'inOutQuad'
 			},
 			{
 				'target': 'facefg',
-				'translateY': [window.getComputedStyle($('abt')).top, window.getComputedStyle($('abt')).top],
+				'translateY': ['100%', '100%'],
 				'ease': 'inOutQuad'
 			},
 		]
 	},
 	{
-		rg: [2, 3],
+		rg: [1.4,2],
+		objs: [
+			{
+				'target': 'vidmaskleft',
+				'translateX': '30%',
+				'rotate': '-45deg',
+				'easing': 'inOutQuad'
+			},
+			{
+				'target': 'vidmaskright',
+				'translateX': '-30%',
+				'rotate': '-45deg',
+				'easing': 'inOutQuad'
+			}
+		]
+	},
+	{
+		rg: [1.4, 2.1],
 		objs: [
 			{
 				'target': 'facebg',
-				'translateX': $('abt').offsetWidth/2 - $('facefg').offsetWidth/2 + 'px',
-				'translateY': [window.getComputedStyle($('abt')).top, '0px'],
-				'ease': 'outQuad'
+				'translateX': $('abt').offsetWidth/2 - $('facebg').offsetWidth/2 + 'px',
+				'translateY': ['100%', '45%'],
+				'ease': 'inOutQuad'
 			},
 			{
 				'target': 'facefg',
 				'translateX':$('abt').offsetWidth/2 - $('facefg').offsetWidth/2 + 'px',
-				'translateY': [window.getComputedStyle($('abt')).top, '0px'],
+				'translateY': ['100%', '45%'],
 				'ease': 'inOutQuad'
 			},
 			{
 				'target': 'work',
-				'translateY': ['40rem', '2rem'],
+				'translateY': ['110%', '20%'],
 				'ease': 'outQuad',
 				'opacity': [0,1.5]
 			},
@@ -149,6 +166,6 @@ function projectPicVidFrames(){
 		dontuse.push(canuse[attr])
 		canuse.splice(attr,1)
 
-		ranges[5].objs.push(addobj)
+		ranges[6].objs.push(addobj)
 	}
 }
