@@ -89,23 +89,6 @@ var ranges = [
 		]
 	},
 	{
-		rg: [1.4,2],
-		objs: [
-			{
-				'target': 'vidmaskleft',
-				'translateX': '30%',
-				'rotate': '-45deg',
-				'easing': 'inOutQuad'
-			},
-			{
-				'target': 'vidmaskright',
-				'translateX': '-30%',
-				'rotate': '-45deg',
-				'easing': 'inOutQuad'
-			}
-		]
-	},
-	{
 		rg: [1.4, 2.1],
 		objs: [
 			{
@@ -166,6 +149,6 @@ function projectPicVidFrames(){
 		dontuse.push(canuse[attr])
 		canuse.splice(attr,1)
 
-		ranges[6].objs.push(addobj)
+		ranges[5].objs.push(addobj)
 	}
 }

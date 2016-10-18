@@ -2,8 +2,8 @@ var initialHt = window.innerHeight, //on resize, this should be reset
 currentkey = 0,
 sumPrevScrolls = 0
 
-var propertyList = ['translateX', 'translateY', 'scale','rotate','opacity'],
-propertyDefaults = [0,0,1,0,1], unitList = ['px','em','rem','%','deg']
+var propertyList = ['translateX', 'translateY', 'scale','rotate','opacity','clipPath'],
+propertyDefaults = [0,0,1,0,1,'polygon(0% 0%, 0% 100%, 100% 100%, 0% 100%)'], unitList = ['px','em','rem','%','deg']
 
 window.addEventListener('scroll', throttle(updatePage, 10))
 initializePage()
@@ -117,6 +117,9 @@ function updatePage(){
 					if(obj[p] || obj[p]===0){ //if this object contains a property from property list...
 
 						var orig, d, unit = '' //these will eventually be pushed into xform
+
+						// polygon(30% 0%, 100% 0%, 70% 100%, 0% 100%) how to feed this value through d??
+	
 
 						if(Array.isArray(obj[p])){
 							if(typeof obj[p][0] === 'string') orig = Number(obj[p][0].replace(/[^\d.-]/g, ''))

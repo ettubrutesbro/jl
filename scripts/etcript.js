@@ -110,7 +110,7 @@ function Project(proj){ //pseudo class designed to take data and turn it into a 
 
 	element.collapse = function(){
 
-		anim(this, {translateX: 0, translateY: 0, scaleX: 1, scaleY: 1, backgroundColorAlpha: 0},
+		anim(this, {translateX: 0, translateY: 0, scaleX: 1, scaleY: 1},
 			{complete: function(){element.style.zIndex = 1; element.style.backgroundColor = ''}})
 		anim(this.picvid, {scaleX: 1, scaleY: 1}, 
 			{complete: function(){element.info.style.visibility = 'hidden'}})
@@ -153,7 +153,7 @@ function calcProportions(){
 	}
 
 	ps.xFill = 1 / (projs[0].offsetWidth / ps.bodyOffsetW),
-	ps.yFill = .75 / (ps.project / ps.bodyClientH)
+	ps.yFill = .65 / (ps.project / ps.bodyClientH)
 
 	if(ps.xFill > ps.yFill){ //screen is wider than tall
 		ps.fillRatio = 1 / (ps.xFill / ps.yFill)
@@ -192,4 +192,8 @@ proportions = ps //set global variable
 function setXform(element, value){
 	element.style.webkitTransform = element.style.mozTransform = element.style.transform =
 	element.style.msTransform = element.style.oTransform = value
+}
+
+function setClip(element, value){
+	element.style.clipPath = element.style.webkitClipPath = element.style.mozClipPath = element.style.msClipPath = element.oClipPath = value
 }
