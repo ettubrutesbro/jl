@@ -5,7 +5,7 @@ var rangeEnd = 200
 var milestones = []
 var ranges = [
 	{
-		rg: [0,$('abt').offsetHeight/2.5], //range should be able to be set
+		rg: [1,1.6], //range should be able to be set
 		//as a % of (maybe dynamic pixel value
 		// that changes with resize?)
 
@@ -37,7 +37,7 @@ var ranges = [
 		],
 	},
 	{
-		rg: [0, $('abt').offsetHeight/3.15],
+		rg: [1,1.35],
 		objs: [
 			{
 				'target': 'dream',
@@ -50,7 +50,16 @@ var ranges = [
 		]
 	},
 	{
-		rg: [$('abt').offsetHeight/1.6, $('abt').offsetHeight],
+		rg: [1,4],
+		objs: [
+			{
+				'target': 'abt',
+				'translateY': '285%'
+			}
+		]
+	},
+	{
+		rg: [1.6,2.1],
 		objs: [
 			{
 				'target': 'dream',
@@ -65,38 +74,38 @@ var ranges = [
 		]
 	},
 	{
-		rg: [0, $('abt').offsetHeight/3.25],
+		rg: [1, 1.25],
 		objs: [
 			{
 				'target': 'facebg',
-				'translateY': [window.getComputedStyle($('abt')).top, window.getComputedStyle($('abt')).top],
+				'translateY': ['100%', '100%'],
 				'ease': 'inOutQuad'
 			},
 			{
 				'target': 'facefg',
-				'translateY': [window.getComputedStyle($('abt')).top, window.getComputedStyle($('abt')).top],
+				'translateY': ['100%', '100%'],
 				'ease': 'inOutQuad'
 			},
 		]
 	},
 	{
-		rg: [$('abt').offsetHeight/2, $('abt').offsetHeight],
+		rg: [1.4, 2.1],
 		objs: [
 			{
 				'target': 'facebg',
-				'translateX': $('abt').offsetWidth/2 - $('facefg').offsetWidth/2 + 'px',
-				'translateY': [window.getComputedStyle($('abt')).top, '0px'],
-				'ease': 'outQuad'
+				'translateX': $('abt').offsetWidth/2 - $('facebg').offsetWidth/2 + 'px',
+				'translateY': ['100%', '45%'],
+				'ease': 'inOutQuad'
 			},
 			{
 				'target': 'facefg',
 				'translateX':$('abt').offsetWidth/2 - $('facefg').offsetWidth/2 + 'px',
-				'translateY': [window.getComputedStyle($('abt')).top, '0px'],
+				'translateY': ['100%', '45%'],
 				'ease': 'inOutQuad'
 			},
 			{
 				'target': 'work',
-				'translateY': ['40rem', '2rem'],
+				'translateY': ['110%', '20%'],
 				'ease': 'outQuad',
 				'opacity': [0,1.5]
 			},
@@ -140,6 +149,6 @@ function projectPicVidFrames(){
 		dontuse.push(canuse[attr])
 		canuse.splice(attr,1)
 
-		ranges[4].objs.push(addobj)
+		ranges[5].objs.push(addobj)
 	}
 }

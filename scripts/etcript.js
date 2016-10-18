@@ -41,8 +41,6 @@ window.addEventListener('click',function(){
 	if(selectedProject) $(selectedProject).collapse()
 })
 
-
-
 //TODO: nextvid needs to count 2 back, so it doesn't play the same one or the previous one again
 
 function nextvid(){
@@ -112,7 +110,7 @@ function Project(proj){ //pseudo class designed to take data and turn it into a 
 
 	element.collapse = function(){
 
-		anim(this, {translateX: 0, translateY: 0, scaleX: 1, scaleY: 1, backgroundColorAlpha: 0},
+		anim(this, {translateX: 0, translateY: 0, scaleX: 1, scaleY: 1},
 			{complete: function(){element.style.zIndex = 1; element.style.backgroundColor = ''}})
 		anim(this.picvid, {scaleX: 1, scaleY: 1}, 
 			{complete: function(){element.info.style.visibility = 'hidden'}})
@@ -145,7 +143,6 @@ function distribute(animated, proj){
 
 		// console.log( i*(projectWidth+margin) + projectWidth )
 	}
-
 }
 
 function calcProportions(){
@@ -153,11 +150,10 @@ function calcProportions(){
 		bodyOffsetW: document.body.offsetWidth,
 		bodyClientH: document.body.clientHeight,
 		project: projs[0].offsetWidth
-		
 	}
 
 	ps.xFill = 1 / (projs[0].offsetWidth / ps.bodyOffsetW),
-	ps.yFill = .75 / (ps.project / ps.bodyClientH)
+	ps.yFill = .65 / (ps.project / ps.bodyClientH)
 
 	if(ps.xFill > ps.yFill){ //screen is wider than tall
 		ps.fillRatio = 1 / (ps.xFill / ps.yFill)
@@ -169,8 +165,6 @@ function calcProportions(){
 	ps.projectPicSize = Math.min(ps.project*ps.xFill, ps.project*ps.yFill)
 	ps.abtH = $('abt').offsetHeight + document.getElementsByTagName('video')[0].offsetHeight
 	ps.workH = Number(projs[projs.length-1].style.top.replace(/[^\d.-]/g, '')) + ps.project 
-		
-	
 
 	$('abt').style.height = ps.abtH
 	$('work').style.height = ps.workH
@@ -189,9 +183,6 @@ function calcProportions(){
 			infos[i].style.top = (ps.projectPicSize / ps.yFill)
 			setXform(infos[i], 'scaleY('+ps.fillRatio+')')
 		}
-		
-		
-
 	}
 
 proportions = ps //set global variable
@@ -201,4 +192,8 @@ proportions = ps //set global variable
 function setXform(element, value){
 	element.style.webkitTransform = element.style.mozTransform = element.style.transform =
 	element.style.msTransform = element.style.oTransform = value
+}
+
+function setClip(element, value){
+	element.style.clipPath = element.style.webkitClipPath = element.style.mozClipPath = element.style.msClipPath = element.oClipPath = value
 }
