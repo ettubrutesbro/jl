@@ -88,34 +88,14 @@ body{
 	font-size: 1.25rem;
 	line-height: 1.9rem;
 }
-	#maskcontainer {
-		width: inherit;
-		height: 550px;
-		position: absolute; 
-		margin-top: 2rem;
-		overflow: hidden;
-	}
-	.scrollvidmask{
-		position: absolute;
-		background-color: white;
-		margin: auto auto;
-		width: 250%;
-		height: 250%;
-		transform-origin: 50% 50%;
-		z-index: 2;
-	}
-		#vidmaskright{
-			right: -250%; bottom: 0; 
-		}
-		#vidmaskleft{
-			left: -250%; top: 0;
-		}
+
 video {
 	visibility: hidden; 
 	position: absolute; 
 	padding-top: 2rem;
 	width: inherit;
 	z-index: 1;
+	height: 550px;
 }
 #dream{
 	position: absolute;
