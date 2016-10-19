@@ -119,7 +119,12 @@ function updatePage(){
 						var orig, d, unit = '' //these will eventually be pushed into xform
 
 						// polygon(30% 0%, 100% 0%, 70% 100%, 0% 100%) how to feed this value through d??
-	
+							/*
+								1. remove polygon and parens
+								2. splin into array of 4 by commas
+								3. split those 4 by the space
+								4. remove the % sign
+							*/
 
 						if(Array.isArray(obj[p])){
 							if(typeof obj[p][0] === 'string') orig = Number(obj[p][0].replace(/[^\d.-]/g, ''))
