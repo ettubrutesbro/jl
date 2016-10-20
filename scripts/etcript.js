@@ -195,10 +195,25 @@ proportions = ps //set global variable
 }
 
 function setXform(element, value){
+	if(Array.isArray(element)){
+		for(var i = 0; i<element.length; i++){
+			element[i].style.webkitTransform = element[i].style.mozTransform = element[i].style.transform =
+			element[i].style.msTransform = element[i].style.oTransform = value
+		}
+	}
 	element.style.webkitTransform = element.style.mozTransform = element.style.transform =
 	element.style.msTransform = element.style.oTransform = value
 }
 
 function setClip(element, value){
-	element.style.clipPath = element.style.webkitClipPath = element.style.mozClipPath = element.style.msClipPath = element.oClipPath = value
+	if(Array.isArray(element)){
+		for(var i = 0; i<element.length; i++){
+			element[i].style.clipPath = element[i].style.webkitClipPath = element[i].style.mozClipPath = 
+			element[i].style.msClipPath = element[i].style.oClipPath = value
+		}
+	}
+	else {
+		element.style.clipPath = element.style.webkitClipPath = element.style.mozClipPath = 
+		element.style.msClipPath = element.style.oClipPath = value
+	}
 }

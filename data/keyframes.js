@@ -5,31 +5,25 @@ var rangeEnd = 200
 var milestones = []
 var ranges = [
 	{
-		rg: [1,1.6], //range should be able to be set
-		//as a % of (maybe dynamic pixel value
-		// that changes with resize?)
-
-		/*
-			eg, by the 50% through or the end of the about section, 
-			the text and face icon should be in these positions / opacities
-		*/
+		name: ''
+		rg: [1,1.6],
 		objs: [
 			{
-				'target': 'jackleng',
+				'target': '#jackleng',
 				'translateX': '-3rem'
 			},
 			{
-				'target': 'helloiam',
+				'target': '#helloiam',
 				'translateX': '-1.75rem',
 				'opacity': -1
 
 			},
 			{
-				'target': 'hellowrapper',
+				'target': '#hellowrapper',
 				'translateY': '14rem'
 			},
 			{
-				'target': 'abtme',
+				'target': '#abtme',
 				'translateY': '-3rem',
 				'opacity': -.5
 			},
@@ -37,74 +31,83 @@ var ranges = [
 		],
 	},
 	{
-		rg: [1,1.35],
+		name: ''
+		rg: [1,1.13],
 		objs: [
 			{
-				'target': 'dream',
+				'target': '#dream',
 				'translateY': ['0%','130%']
 			},
 			{
-				'target': 'videocaption',
+				'target': '#videocaption',
 				'translateY': ['200%','0%']
 			}
 		]
 	},
 	{
+		name: ''
 		rg: [1,4],
 		objs: [
 			{
-				'target': 'abt',
+				'target': '#abt',
 				'translateY': '285%'
 			}
 		]
 	},
 	{
-		rg: [1.6,2.1],
+		name: ''
+		rg: [1.4,1.65],
 		objs: [
 			{
-				'target': 'dream',
+				'target': '#dream',
 				'translateY': ['130%','200%'],
 				'opacity': -0.5
 			},
 			{
-				'target': 'videocaption',
+				'target': '#videocaption',
 				'translateY': ['0%','-90%'],
 				'opacity': -0.5
 			}
 		]
 	},
 	{
+		name: ''
 		rg: [1, 1.25],
 		objs: [
 			{
-				'target': 'facebg',
+				'target': '#facebg',
 				'translateY': ['100%', '100%'],
 				'ease': 'inOutQuad'
 			},
 			{
-				'target': 'facefg',
+				'target': '#facefg',
 				'translateY': ['100%', '100%'],
 				'ease': 'inOutQuad'
 			},
 		]
 	},
 	{
+		name: ''
 		rg: [1.4, 2.1],
 		objs: [
 			{
-				'target': 'facebg',
+				'target': '.abtvid', //scrollimo needs to be able to handle classes as well as id
+				'clipPath': [[50,0],[100,0],[50,100],[0,100]]
+			},
+			{
+				'target': '#facebg',
 				'translateX': $('abt').offsetWidth/2 - $('facebg').offsetWidth/2 + 'px',
 				'translateY': ['100%', '45%'],
 				'ease': 'inOutQuad'
 			},
 			{
-				'target': 'facefg',
+				'target': '#facefg',
 				'translateX':$('abt').offsetWidth/2 - $('facefg').offsetWidth/2 + 'px',
 				'translateY': ['100%', '45%'],
 				'ease': 'inOutQuad'
 			},
 			{
-				'target': 'work',
+				'target': '#work',
 				'translateY': ['110%', '20%'],
 				'ease': 'outQuad',
 				'opacity': [0,1.5]
@@ -140,7 +143,7 @@ function projectPicVidFrames(){
 	for(var i = 0; i<projs.length; i++){
 		if(i % 4 === 0 && i>0) { console.log('resetting arrays'); canuse = dontuse; dontuse = [] }
 		var attr = canuse.length > 1? Math.floor(Math.random()*(canuse.length)): 0
-		var addobj = {'target': projs[i].picvid.id, 'ease': 'inOutQuad'}
+		var addobj = {'target': '#'+projs[i].picvid.id, 'ease': 'inOutQuad'}
 		addobj[canuse[attr][0]] = canuse[attr][1]
 		var randRot = Math.random() > 0.5 ? 1: -1
 		randRot = (Math.random() * randRot) * 45

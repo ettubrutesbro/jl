@@ -3,7 +3,7 @@ currentkey = 0,
 sumPrevScrolls = 0
 
 var propertyList = ['translateX', 'translateY', 'scale','rotate','opacity','clipPath'],
-propertyDefaults = [0,0,1,0,1,'polygon(0% 0%, 0% 100%, 100% 100%, 0% 100%)'], unitList = ['px','em','rem','%','deg']
+propertyDefaults = [0,0,1,0,1,[[0,0],[100,0],[100,100],[0,100]]], unitList = ['px','em','rem','%','deg']
 
 window.addEventListener('scroll', throttle(updatePage, 10))
 initializePage()
@@ -42,8 +42,6 @@ function updatePage(){
 	window.requestAnimationFrame(function(){
 
 		var prog = (window.pageYOffset + proportions.bodyClientH) / proportions.bodyClientH
-		// console.log(document.scrollY)
-		console.log(prog)
 
 		for(var i = 0; i<ranges.length; i++){ //per range ops
 			var r = ranges[i]
@@ -102,13 +100,17 @@ function updatePage(){
 			//PROGRESSING THRU RANGE: CALCULATING PROPERTY VALUES BASED ON "RANGEPCT"
 			// var rangepct = (window.scrollY - r.rg[0]) / (r.rg[1] - r.rg[0])
 			var rangepct = (prog - r.rg[0]) / (r.rg[1] - r.rg[0]) 
-			console.log(rangepct)
 
 			for(var it = 0; it<r.objs.length; it++){ //per element ops
 
 				var obj = r.objs[it] //object with destination values for a DOM element's properties
 				var computedXform = '' //string stores transform values, to be pushed after
-				var tgt = $(obj.target)
+				var tgt
+				if(obj.target[0] === '#'){ //its an id
+					tgt = $(obj.target.replace('#',''))
+				}else if(obj.target[0] === '.'){ //its a class
+					tgt = [].slice.call(document.getElementsByClassName(obj.target.replace('.','')))
+				}
 
 
 
@@ -120,17 +122,39 @@ function updatePage(){
 
 						// polygon(30% 0%, 100% 0%, 70% 100%, 0% 100%) how to feed this value through d??
 							/*
+
 								1. remove polygon and parens
-								2. splin into array of 4 by commas
-								3. split those 4 by the space
+								2. splin into array of 4 arrays by commas [],[],[],[] - each of these is a point in the polygon
+								3. split each of those 4 by the space (8 values total) - each of these is a coordinate value for a point
+									coord = 10% (0,x) vs. orig = 
 								4. remove the % sign
 							*/
+						if(p==='clipPath'){
+							var oldCoords = obj[p].length===2? obj[p][0] : propertyDefaults[ite]
+							var newCoords = obj[p].length===2? obj[p][1] : obj[p]
+							//[[30,0],[100,0],[70,100],[0,100]]
+							var currentCoords = 'polygon('
+							for(var iter = 0; iter < newCoords.length; iter++){ //for every point in the shape
+								var originX, destX, originY, destY
+								originX = oldCoords[iter][0]
+								destX = newCoords[iter][0]
+								originY = oldCoords[iter][1]
+								destY = newCoords[iter][1]
 
-						if(Array.isArray(obj[p])){
+								currentCoords+=(originX + ((destX - originX)*rangepct)+'%')+' '+
+								(originY + ((destY - originY)*rangepct)+'%')
+								if(iter<newCoords.length-1) currentCoords+=','
+							}
+							currentCoords+=')'
+							setClip(tgt, currentCoords)
+
+						}
+						else if(Array.isArray(obj[p])){ //if the keyframe property's value is an array
+							//remove non-numeric characters and set the first value as ORIG
 							if(typeof obj[p][0] === 'string') orig = Number(obj[p][0].replace(/[^\d.-]/g, ''))
 							else orig = obj[p][0]
 						}
-						else orig = propertyDefaults[ite]
+						else orig = propertyDefaults[ite] //if it's not an array, use a default value
 
 						if(typeof obj[p] === 'string' || typeof obj[p][1] === 'string'){ //accounts for units ('px' etc)
 							if(Array.isArray(obj[p])) d = obj[p][1]//use obj[p][0] instead of obj[p]
@@ -148,10 +172,14 @@ function updatePage(){
 						if(obj.ease) d = easings[obj.ease](rangepct, orig, d-orig , 1) + unit
 						else if(!obj.ease) d = orig - ((orig-d)*rangepct) + unit
 						
-						if(p === 'opacity') tgt.style.opacity = d
+						if(p === 'opacity'){
+							//TODO this needs to be prepped for arrays and stuff
+							tgt.style.opacity = d
+						}
 						else computedXform +=' '+ p + '(' + d + ')'
 					}
 				}//end property computation
+				console.log(tgt)
 				setXform(tgt, computedXform)	
 			}//end element ops
 		}
