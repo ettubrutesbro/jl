@@ -201,8 +201,11 @@ function setXform(element, value){
 			element[i].style.msTransform = element[i].style.oTransform = value
 		}
 	}
-	element.style.webkitTransform = element.style.mozTransform = element.style.transform =
+	else{
+		element.style.webkitTransform = element.style.mozTransform = element.style.transform =
 	element.style.msTransform = element.style.oTransform = value
+	}
+	
 }
 
 function setClip(element, value){

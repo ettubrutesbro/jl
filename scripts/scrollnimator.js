@@ -120,15 +120,6 @@ function updatePage(){
 
 						var orig, d, unit = '' //these will eventually be pushed into xform
 
-						// polygon(30% 0%, 100% 0%, 70% 100%, 0% 100%) how to feed this value through d??
-							/*
-
-								1. remove polygon and parens
-								2. splin into array of 4 arrays by commas [],[],[],[] - each of these is a point in the polygon
-								3. split each of those 4 by the space (8 values total) - each of these is a coordinate value for a point
-									coord = 10% (0,x) vs. orig = 
-								4. remove the % sign
-							*/
 						if(p==='clipPath'){
 							var oldCoords = obj[p].length===2? obj[p][0] : propertyDefaults[ite]
 							var newCoords = obj[p].length===2? obj[p][1] : obj[p]

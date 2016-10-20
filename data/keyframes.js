@@ -5,126 +5,52 @@ var rangeEnd = 200
 var milestones = []
 var ranges = [
 	{
-		name: ''
-		rg: [1,1.6],
+		name: '',
+		rg: [1,1.3],
 		objs: [
 			{
+				'target': '#hello',
+				'rotate': '-25deg'
+			},
+			{
 				'target': '#jackleng',
-				'translateX': '-3rem'
+				// 'translateX': '-1.35rem',
+				'opacity': 0
 			},
 			{
 				'target': '#helloiam',
-				'translateX': '-1.75rem',
-				'opacity': -1
+				// 'translateX': '-1.1rem',
+				'opacity': -.5
 
 			},
-			{
-				'target': '#hellowrapper',
-				'translateY': '14rem'
-			},
+
 			{
 				'target': '#abtme',
-				'translateY': '-3rem',
-				'opacity': -.5
+				'translateY': '-1.5rem',
+				'opacity': -.25
 			},
+			{
+				'target': '.abtvid',
+				'clipPath': [[30,0],[100,0],[70,100],[0,100]]
+			}
 			
 		],
 	},
 	{
-		name: ''
-		rg: [1,1.13],
+		name: '',
+		rg: [1.3,2],
 		objs: [
 			{
-				'target': '#dream',
-				'translateY': ['0%','130%']
-			},
-			{
-				'target': '#videocaption',
-				'translateY': ['200%','0%']
-			}
-		]
-	},
-	{
-		name: ''
-		rg: [1,4],
-		objs: [
-			{
-				'target': '#abt',
-				'translateY': '285%'
-			}
-		]
-	},
-	{
-		name: ''
-		rg: [1.4,1.65],
-		objs: [
-			{
-				'target': '#dream',
-				'translateY': ['130%','200%'],
-				'opacity': -0.5
-			},
-			{
-				'target': '#videocaption',
-				'translateY': ['0%','-90%'],
-				'opacity': -0.5
-			}
-		]
-	},
-	{
-		name: ''
-		rg: [1, 1.25],
-		objs: [
-			{
-				'target': '#facebg',
-				'translateY': ['100%', '100%'],
-				'ease': 'inOutQuad'
-			},
-			{
-				'target': '#facefg',
-				'translateY': ['100%', '100%'],
-				'ease': 'inOutQuad'
-			},
-		]
-	},
-	{
-		name: ''
-		rg: [1.4, 2.1],
-		objs: [
-			{
-				'target': '.abtvid', //scrollimo needs to be able to handle classes as well as id
-				'clipPath': [[50,0],[100,0],[50,100],[0,100]]
-			},
-			{
-				'target': '#facebg',
-				'translateX': $('abt').offsetWidth/2 - $('facebg').offsetWidth/2 + 'px',
-				'translateY': ['100%', '45%'],
-				'ease': 'inOutQuad'
-			},
-			{
-				'target': '#facefg',
-				'translateX':$('abt').offsetWidth/2 - $('facefg').offsetWidth/2 + 'px',
-				'translateY': ['100%', '45%'],
-				'ease': 'inOutQuad'
-			},
-			{
-				'target': '#work',
-				'translateY': ['110%', '20%'],
-				'ease': 'outQuad',
-				'opacity': [0,1.5]
-			},
+				'target': '.abtvid',
+				'clipPath': [
+					[[30,0],[100,0],[70,100],[0,100]],
+					[[50,50],[100,50],[50,50],[0,50]]
+				]
 
-		],
-		callforward: function(){
-			$('work').style.visibility = 'hidden'
-		},
-		callduring: function(){
-			$('work').style.visibility = 'visible'
-			workEnabled = false
-		},
-		callback: function(){
-			workEnabled = true
-		}
-	}
+			}
+		]
+	},
+
 
 
 ]
