@@ -9,46 +9,99 @@ window.addEventListener('scroll', throttle(updatePage, 10))
 initializePage()
 updatePage()
 
-/*
-	BUILDING THE PAGE:
-
-	we should already know the heights of the 3 sections
-	those sections' offsetHeights (px) should be seeded into var ranges,
-	[[or is it bounding box bottom coordinates..?]]
-	so we can have ranges that respond to percentages of sections
-		(currently, the shitty logic is based on a % multiple of the window.clientHeight)
-
-	when resizing (DEBOUNCED!!! from _.js), regrab those heights, reseed the ranges, 
-	use 'prog' to retain user's position on page 
-
-*/
 function initializePage(){
-	// var totalScroll = 0
-	// for(var i=0; i<keyframes.length; i++){
-	// 	totalScroll += Number(keyframes[i].scrollTarget)/100 * window.innerHeight
-	// }
+	//goes through ranges, finds the highest value (last 'keyframe point'),
+	//and multiplies it by the window height to get the final body height
+
 	var allEnds = []
 	for(var i = 0; i<ranges.length; i++){
 		allEnds.push(ranges[i].rg[1])
 	}
-	console.log('highest range ending was '+ Math.max(...allEnds))
 	proportions.bodyOffsetH = document.body.style.height = Math.max(...allEnds) * window.innerHeight
 
-	// document.body.style.height = $('abt').offsetHeight + $('work').offsetHeight * 2
 }
 function updatePage(){
-	// during any keyframe , we look at what % scrollProgress is of the keyframe's 'scrollTarget', 
-	// and that % multiplies by the supplied property value of that keyframe for the targeted element
+	// during scroll, we look at what % we are through the total body height, 
+	// then get what % we are through any applicable ranges, multiplying differences b/w
+	// origins / destinations by that % and adding them 
 	window.requestAnimationFrame(function(){
 
+		//get % thru body 
 		var prog = (window.pageYOffset + proportions.bodyClientH) / proportions.bodyClientH
 
-		for(var i = 0; i<ranges.length; i++){ //per range ops
+		//for each range...
+		for(var i = 0; i<ranges.length; i++){ 
 			var r = ranges[i]
+			var rangepct = (prog - ranges[i].rg[0]) / (ranges[i].rg[1] - ranges[i].rg[0])
+			if(r.active){
+				if(rangepct > 1){
+					if(typeof r.callback === 'function') r.callback()
+					r.active = false
+				}
+				else if(rangepct < 0){
+					if(typeof r.callforward === 'function') r.callforward()
+					r.active = false
+				}
+				setRangeObjProps(rangepct)
+			}
+			else if(!r.active && rangepct > 0 && rangepct < 1){
+				r.active = true
+				if(typeof r.callduring === 'function') r.callduring()
+				setRangeObjProps(rangepct)
+			}
+
+
+
+
+			//dive into the range's objects and set properties according to % thru range
+			// if(r.active)
+			// setRangeObjProps((prog - ranges[i].rg[0]) / (ranges[i].rg[1] - ranges[i].rg[0])) 
+
+
+
+
+
+
+
+
+
+
+
 			//CHECKING FOR EXCEED / PRECEDE
+
+			/*
+				
+				1. for each range, are we outside or in the range?
+					1a. if we're outside, set element values to end/start values
+				2. if we're in, how far through it are we? 
+				3. set element values to the orig - through% * change 
+
+				if(prog > r.rg[1]) //exceed
+					if(r.active) setRangeObjProps(true,1)
+					else continue
+				else if(prog < r.rg[0]) //precede
+					if(r.active) setRangeObjProps(true,0)
+					else continue
+				else if(!r.active) //just entered
+					if(typeof r.callduring ==='function') r.callduring()
+					r.active = true
+
+				//post-exceed/precede/entry checks:
+
+				var rangepct
+	
+				setRangeObjProps(false,null,)
+
+				for(var it = 0; it<r.objs.length; it++){ 
+
+					var obj = r.objs[it]
+					var computedXform = ''
+
+			*/
+
 			if(prog > r.rg[1]){ //progress exceeds range
-				if(r.active){ //this boolean should ensure call_ functions only get executed once until
-					//range has been re-entered
+				if(r.active){ 
+
 					if(typeof r.callback === 'function') r.callback()
 					r.active = false
 					//set all properties to ending values
