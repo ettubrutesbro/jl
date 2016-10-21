@@ -78,6 +78,6 @@ function projectPicVidFrames(){
 		dontuse.push(canuse[attr])
 		canuse.splice(attr,1)
 
-		ranges[5].objs.push(addobj)
+		// ranges[5].objs.push(addobj)
 	}
 }
