@@ -209,6 +209,7 @@ function setXform(element, value){
 }
 
 function setClip(element, value){
+	// console.log(value)
 	if(Array.isArray(element)){
 		for(var i = 0; i<element.length; i++){
 			element[i].style.clipPath = element[i].style.webkitClipPath = element[i].style.mozClipPath = 

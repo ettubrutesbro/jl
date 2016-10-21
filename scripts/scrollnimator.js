@@ -32,7 +32,7 @@ function updatePage(){
 		//for each range...
 		for(var i = 0; i<ranges.length; i++){ 
 			var r = ranges[i]
-			var rangepct = constrain((prog - ranges[i].rg[0]) / (ranges[i].rg[1] - ranges[i].rg[0]),0,1)
+			var rangepct = (prog - ranges[i].rg[0]) / (ranges[i].rg[1] - ranges[i].rg[0])
 			if(r.active){
 				if(rangepct > 1){
 					if(typeof r.callback === 'function') r.callback()
@@ -42,7 +42,7 @@ function updatePage(){
 					if(typeof r.callforward === 'function') r.callforward()
 					r.active = false
 				}
-				setRangeObjProps(r, rangepct)
+				setRangeObjProps(r, constrain(rangepct,0,1))
 			}
 			else if(!r.active && rangepct > 0 && rangepct < 1){
 				r.active = true
@@ -58,11 +58,6 @@ function updatePage(){
 
 
 // t: current time, b: begInnIng value, c: change In value, d: duration
-
-	function easeInOutQuad(t,b,c,d){
-		if ((t/=d/2) < 1) return c/2*t*t + b;
-		return -c/2 * ((--t)*(t-2) - 1) + b;
-	}
 
 function setRangeObjProps(range, rp){
 //rp will tell if we're inside or outside+which side
@@ -96,6 +91,7 @@ for(var i = 0; i<range.objs.length; i++){
 					if(iter<newCoords.length-1) currentCoords+=','
 				}
 				currentCoords+=')'
+				console.log(currentCoords)
 				setClip(tgt, currentCoords)
 				continue
 			}
