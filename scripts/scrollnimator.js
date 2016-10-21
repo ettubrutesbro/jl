@@ -53,15 +53,7 @@ function updatePage(){
 	})
 }
 
-
-// easeInOutQuad(rangepct)
-
-
-// t: current time, b: begInnIng value, c: change In value, d: duration
-
 function setRangeObjProps(range, rp){
-//rp will tell if we're inside or outside+which side
-//if it's below 0 or above 1, set the properties
 for(var i = 0; i<range.objs.length; i++){
 	var obj = range.objs[i]
 	var tgt
