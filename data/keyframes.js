@@ -6,11 +6,32 @@ var milestones = []
 var ranges = [
 	{
 		name: '',
-		rg: [1.25,1.5],
+		rg: [1.4,1.8],
 		objs: [
+			// {
+			// 	'target': '.abtvid',
+			// 	'clipPath': [[0,0],[100,0],[100,100],[0,65]]
+			// }
 			{
-				// 'target': '.abtvid',
-				// 'clipPath': [[0,0],[100,0],[100,100],[0,65]]
+				'target': '#helloiam',
+				'translateX': '-25%',
+				'opacity': -.5
+			},
+			{
+				'target': '#jackleng',
+				'translateX': '-50%',
+				'opacity': -.65
+			},
+			{
+				'target': '#abtme',
+				'translateX': '30%',
+				'opacity': -.85
+			},
+			{
+				'target': '#dream',
+				'translateY': ['-100%','0%'],
+				'opacity': [0,1],
+				'ease': 'inOutQuad'
 			}
 			
 		],

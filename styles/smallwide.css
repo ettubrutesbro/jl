@@ -13,7 +13,7 @@
 		left: -30rem;
 		background-color: white;
 	}
-	#abt { top: 10.5rem; }	
+	#abt { top: 13rem; }	
 	#fixedbg #text { height: 10.5rem; }
 	#hello{
 		padding-left: 12rem;
@@ -24,5 +24,6 @@
 	}
 	#abtme { flex-basis: 47%; font-size: 1.15rem; line-height: 1.7rem; }
 	.abtvid { height: 391px; }
+	#dream {position: absolute; top: 391px; padding-top: 1rem;}
 
 }

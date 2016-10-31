@@ -37,6 +37,7 @@
 	}
 	#abt { top: 20rem; width: 100%; }	
 	.abtvid{ width: 1280px; left:-100%; right: -100%; margin: 0 auto; bottom: 0;}
-	#dream { display: none; }
-	#videocaption { display: none; }
+	#dream { position: absolute; top: 488px; 
+		left: 0; right: 0; margin: 0 auto;
+		padding-top: 1.5rem; width: 90%; line-height: 1.5rem;}
 }

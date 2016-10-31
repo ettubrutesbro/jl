@@ -14,7 +14,7 @@
 		left: -30rem;
 		background-color: white;
 	}
-	#abt{ top: 10rem; }
+	#abt{ top: 12rem; }
 	#fixedbg #text{ height: 10rem; padding-top: .5rem; }
 	#hello{
 		padding-left: 12rem;
@@ -28,8 +28,15 @@
 	#hello #helloiam { height: 1.35rem;  top: 0;}
 	#hello #jackleng { height: 3.5rem;  top: 1.35rem;}
 	#abtme { flex-basis: 47%; font-size: 1.25rem; line-height: 1.9rem; }
-	video { padding-top: 2rem; height: 550px; }
-	#dream{ width: 50%; font-size: 1.25rem; line-height: 1.9rem; bottom: 0; }
+	video { height: 550px; }
+	#dream{ 
+		position: absolute; 
+		width: 50%; 
+		font-size: 1.25rem; 
+		line-height: 1.9rem; 
+		top: 550px; 
+		padding-top: 1.5rem; 
+	}
 	#videocaption{ width: 45%; right: 1.5rem; bottom: 0; font-size: 1.25rem; line-height: 1.9rem; }
 		#videocaption p{ right: 0; bottom: 0;}
 	#work{ top: 11rem; margin-top: 2rem; }
