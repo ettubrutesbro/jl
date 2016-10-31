@@ -6,50 +6,16 @@ var milestones = []
 var ranges = [
 	{
 		name: '',
-		rg: [1,1.3],
+		rg: [1.25,1.5],
 		objs: [
 			{
-				'target': '#hello',
-				'rotate': '-25deg'
-			},
-			{
-				'target': '#jackleng',
-				// 'translateX': '-1.35rem',
-				'opacity': 0
-			},
-			{
-				'target': '#helloiam',
-				// 'translateX': '-1.1rem',
-				'opacity': -.5
-
-			},
-
-			{
-				'target': '#abtme',
-				'translateY': '-1.5rem',
-				'opacity': -.25
-			},
-			{
-				'target': '.abtvid',
-				'clipPath': [[30,0],[100,0],[70,100],[0,100]]
+				// 'target': '.abtvid',
+				// 'clipPath': [[0,0],[100,0],[100,100],[0,65]]
 			}
 			
 		],
 	},
-	{
-		name: '',
-		rg: [1.3,2],
-		objs: [
-			{
-				'target': '.abtvid',
-				'clipPath': [
-					[[30,0],[100,0],[70,100],[0,100]],
-					[[50,50],[100,50],[50,50],[0,50]]
-				]
-
-			}
-		]
-	},
+	
 
 
 
@@ -78,6 +44,6 @@ function projectPicVidFrames(){
 		dontuse.push(canuse[attr])
 		canuse.splice(attr,1)
 
-		// ranges[5].objs.push(addobj)
+		// ranges[1].objs.push(addobj)
 	}
 }

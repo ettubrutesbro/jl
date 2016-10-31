@@ -4,7 +4,7 @@ var $ = document.getElementById.bind(document),
 	
 
 var	loadedvids = 0
-	lastplayed = 3
+	lastplayed = 0
 
 var vidarray = document.getElementsByTagName('video')
 
