@@ -68,13 +68,11 @@ video {
 }
 #videocaption{
 	color: rgba(0,0,0,0);
-	position: absolute;
 	z-index: 3;
 }
 	#videocaption p{
 		visibility: hidden;
 		color: white;
-		text-align: right;
 		position: absolute;
 	}
 	#videocaption p:first-child{
@@ -86,9 +84,7 @@ video {
 	position: fixed; 
 	width: inherit;
 }
-	#work #dream{
-		bottom: 0;
-	}
+
 
 .project, .project .picvid{
 	position: absolute;

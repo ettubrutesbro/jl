@@ -5,26 +5,34 @@ var rangeEnd = 200
 var milestones = []
 var ranges = [
 	{
+		rg: [1.15,1.7],
+		objs: [
+			{
+				'target': '#helloiam',
+				'translateX': '-18%',
+				'opacity': -.5
+			}
+		]
+
+	},
+	{
 		name: '',
-		rg: [1.4,1.8],
+		rg: [1.35,1.8],
 		objs: [
 			// {
 			// 	'target': '.abtvid',
 			// 	'clipPath': [[0,0],[100,0],[100,100],[0,65]]
 			// }
-			{
-				'target': '#helloiam',
-				'translateX': '-25%',
-				'opacity': -.5
-			},
+			
 			{
 				'target': '#jackleng',
-				'translateX': '-50%',
+				'translateX': '-30%',
 				'opacity': -.65
 			},
 			{
 				'target': '#abtme',
 				'translateX': '30%',
+				'clipPath': [[0,0],[50,0],[50,100],[0,100]],
 				'opacity': -.85
 			},
 			{
@@ -32,10 +40,27 @@ var ranges = [
 				'translateY': ['-100%','0%'],
 				'opacity': [0,1],
 				'ease': 'inOutQuad'
+			},
+			{
+				'target': '.videocaption',
+				'translateX': ['-15%','0%'],
+				// 'translateY': ['100%','0%'],
+				'opacity': [-1,1],
+				'ease': 'outQuad'
 			}
 			
 		],
 	},
+	{
+		rg: [1.3, 2.2],
+		objs: [
+			{
+				'target': '#abt',
+				'translateY': '-60%',
+				// 'clipPath': [[15,20],[100,20],[85,100],[0,100]]
+			}
+		]
+	}
 	
 
 

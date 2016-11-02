@@ -1,7 +1,8 @@
 
 @media only screen and (min-width : 1280px) and (max-width : 1599px) {
-	html{font-size: 13px;}
+	html{font-size: 15px;}
 	body{width: 1024px;}
+
 	.fixed{ height: 10.5rem; top: 1rem;}
 	.myface{width:10.5rem; height:10.5rem; background-size:91%; margin-right: 2rem;}
 	.myface#facebg::before{
@@ -24,6 +25,15 @@
 	}
 	#abtme { flex-basis: 47%; font-size: 1.15rem; line-height: 1.7rem; }
 	.abtvid { height: 391px; }
-	#dream {position: absolute; top: 391px; padding-top: 1rem;}
+	#dream {position: absolute; top: 391px; padding-top: 1rem; font-size: 1.15rem;
+		line-height: 1.7rem;}
 
+	#videocaption {
+		font-size: 1.15rem;
+		line-height: 1.7rem;
+	}
+	#videocaption p{
+		left: 12rem; bottom: 0; top: 0; margin: auto auto;
+		width: 30rem; height: 3rem;
+	}
 }

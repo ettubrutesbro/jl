@@ -1,7 +1,7 @@
 
 @media only screen and (min-width : 1600px) {
 	html{font-size: 16px;}
-	body{ width: 1440px;}
+	body{ width: 1440px; }
 	.fixed{ height: 10rem; top: 1rem;}
 	.myface{width:10rem; height:10rem; background-size:90%; margin-right: 2rem;}
 	.myface#facebg::before{
@@ -37,8 +37,16 @@
 		top: 550px; 
 		padding-top: 1.5rem; 
 	}
-	#videocaption{ width: 45%; right: 1.5rem; bottom: 0; font-size: 1.25rem; line-height: 1.9rem; }
-		#videocaption p{ right: 0; bottom: 0;}
+	#videocaption{ 
+		right: 1.5rem; bottom: 0; 
+		font-size: 1.25rem; line-height: 1.9rem; 
+	}
+		#videocaption p{ 
+			width: 40%;
+			height: 4rem;
+			left: 10.5rem; bottom: 0; top: 0; 
+			margin: auto 0;
+		}
 	#work{ top: 11rem; margin-top: 2rem; }
 	.project, .project .picvid{ width: 17.5rem; height: 17.5rem; }
 	.project .info{ right: 0; top: 0; font-size: .325rem; line-height: .5rem;  }
