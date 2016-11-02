@@ -3,9 +3,9 @@ var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
+	devtool: 'cheap-eval-source-map',
 	entry: [
-		'webpack-dev-server/client?http://localhost:8080',
-		'webpack/hot/dev-server',
+
 		"./src/index"
 	], 
 	output: {
@@ -21,13 +21,15 @@ module.exports = {
 	module: {
 		loaders: [{
 			test: /\.css$/, 
-			loaders: ['style','css']
+			loader: 'style!css'
 		}
 		]
 	},
 	devServer: {
-		contentBase: './build',
-		hot: true
+		contentBase: [
+			'./build'
+		],
+		hot: true,
 		inline: true
 	}
 }

@@ -3,9 +3,8 @@ var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
+	devtool: 'source-map',
 	entry: [
-		'webpack-dev-server/client?http://localhost:8080',
-		'webpack/hot/dev-server',
 		"./src/index"
 	], 
 	output: {
@@ -13,7 +12,12 @@ module.exports = {
 		filename: "bundle.js" //the only thing that index.html imports
 	},
 	plugins: [
-		new webpack.HotModuleReplacementPlugin(),
+		new webpack.optimize.UglifyJsPlugin({
+			compressor: {
+				warnings: false,
+			},
+		}),
+		new webpack.optimize.OccurenceOrderPlugin(),
 		new HtmlWebpackPlugin({
 			template: './src/index.html'
 		})
@@ -25,9 +29,4 @@ module.exports = {
 		}
 		]
 	},
-	devServer: {
-		contentBase: './build',
-		hot: true
-		inline: true
-	}
 }

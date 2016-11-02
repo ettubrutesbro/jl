@@ -1,3 +1,3 @@
 //requires here
 
-require("./test.css")
+require("./styles/test.css")
