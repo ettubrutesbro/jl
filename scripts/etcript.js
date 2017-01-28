@@ -22,7 +22,7 @@ var proportions = { //table of values for transforms etc, recalc on resize
 vidarray[0].style.visibility = 'visible'
 vidarray[0].play()
 
-for(var i = 0; i<4; i++){
+for(var i = 0; i<6; i++){
 	vidarray[i].addEventListener('ended', nextvid)
 }
 
@@ -44,7 +44,7 @@ window.addEventListener('click',function(){
 //TODO: nextvid needs to count 2 back, so it doesn't play the same one or the previous one again
 
 function nextvid(){
-	var newvid = Math.floor(Math.random()*4)
+	var newvid = Math.floor(Math.random()*6)
 	if(newvid === lastplayed){ console.log('rerolling'); nextvid(); return}
 
 	vidarray[newvid].play()
