@@ -1,8 +1,10 @@
 <template>
   <div id="projectGrid">
 
-      <article class = "project" v-for = "item in PROJECTS"> 
+      <article class = "project" v-for = "item in PROJECTS">
+        <div class = "projectContent"> 
         {{item.title}}
+        </div>
       </article>
     
   </div>
@@ -31,37 +33,47 @@ export default {
 </script>
 
 <style scoped>
+  #projectGrid{
+    /*align-self: center;*/
+      display: flex;
+      /*align-items: center;*/
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+  .project {
+    position: relative;
+    box-sizing: border-box;
+  }
+  .projectContent{
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    margin: auto auto;
+    border: 1px red solid;
+  }
   @media only screen and (min-width : 1800px) {
     #projectGrid{
-      display: flex;
-      flex-wrap: wrap;
+
     }
     .project {
-      box-sizing: border-box;
-      flex-basis: 20%;
+      width: 150px;
+      height: 150px;
       border: 1px red solid;
     }
 }
   @media only screen and (min-width : 1200px) and (max-width: 1799px){
-    #projectGrid{
-      display: flex;
-      flex-wrap: wrap;
-    }
+    #projectGrid { width: 1100px; }
     .project {
-      box-sizing: border-box;
-      flex-basis: 33%;
+      width: 300px;
+      height: 300px;
       border: 1px green solid;
     }
   }
   
   @media only screen and (min-width : 600px) and (max-width: 1199px){
-    #projectGrid{
-      display: flex;
-      flex-wrap: wrap;
-    }
+   #projectGrid{ width: 90%;  }
     .project {
-      box-sizing: border-box;
-      flex-basis: 50%;
+      width: 35%;
+      padding-bottom: 35%;
       border: 1px blue solid;
     }
   }

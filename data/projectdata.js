@@ -2,5 +2,6 @@ module.exports = [
     {title: 'sendbloom'},
     {title: 'origami logic'},
     {title: 'seseme'},
-    {title: 'wake'}
+    {title: 'wake'},
+    {title: 'fuck'}
 ]
