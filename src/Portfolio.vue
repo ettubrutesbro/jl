@@ -1,6 +1,6 @@
 <template>
   <div id="portfolio">
-    <ProjectGrid></ProjectGrid>
+    <!-- <ProjectGrid></ProjectGrid> -->
     <ExpandTextArea></ExpandTextArea>
     <section id = "projects">
       <Project v-for = "item in PROJECTS"> </Project>
@@ -40,5 +40,6 @@ export default {
     height: 80%;
     top: 0; bottom: 0; margin: auto auto;
     border: 2px black solid;
+    background-color: rgba(0,0,0,0.5);
   }
 </style>
