@@ -1,24 +1,22 @@
 <template>
   <div id="portfolio">
-    <!-- <ProjectGrid></ProjectGrid> -->
+    <ProjectGrid>
+      <!-- <Project v-for = "item in PROJECTS"> </Project> -->
+    </ProjectGrid>
     <ExpandTextArea></ExpandTextArea>
-    <section id = "projects">
-      <Project v-for = "item in PROJECTS"> </Project>
-    </section>
+    
 
   </div>
 </template>
 
 <script>
 
-import Project from './Project.vue'
 import ProjectGrid from './ProjectGrid.vue'
 import ExpandTextArea from './ExpandTextArea.vue'
 
 export default {
   name: 'Portfolio',
   components: {
-    Project,
     ProjectGrid,
     ExpandTextArea
   },
@@ -32,14 +30,29 @@ export default {
 </script>
 
 <style>
+#portfolio{
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  max-height: 1200px;
+  height: 90%;
+  top:0; bottom: 0;
+  left: 0; right:0; margin: auto auto;
+}
 
-  #projects{
-    box-sizing: border-box;
-    position: fixed;
-    width: 50%;
-    height: 80%;
-    top: 0; bottom: 0; margin: auto auto;
-    border: 2px black solid;
-    background-color: rgba(0,0,0,0.5);
+@media (orientation: landscape){
+    #portfolio{
+      flex-direction: row;
+    }
   }
+  @media (orientation: portrait){
+    #portfolio{
+      flex-direction: column;
+    }
+  }
+
+
 </style>

@@ -23,17 +23,16 @@ export default {
         top: 0; bottom: 0; margin: auto auto;
         width: 100%;
         /*height: 100px;*/
-        border: 1px solid blue;
-        background-color: white;
         display: flex;
         align-items: center;
         flex-direction: column;
         justify-content: center;
+        /*border: 1px black solid;*/
     }
     #content {
         width: 50px;
         height: 50px;
-        border: 1px blue solid;
+        background-color: white;
     }
     #caption{
         box-sizing: border-box;

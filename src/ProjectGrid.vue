@@ -1,19 +1,17 @@
 <template>
-  <div id="projectGrid">
-
-      <article class = "project" v-for = "item in PROJECTS">
-        <div class = "projectContent"> 
-        {{item.title}}
-        </div>
-      </article>
-    
+  <div :class = '$style.projectGrid'>
+    <Project v-for = "item in PROJECTS"></Project>
   </div>
 </template>
 
 <script>
+import Project from './Project.vue'
 
 export default {
   name: 'ProjectGrid',
+  components: {
+    Project
+  },
   data () {
     return {
       PROJECTS: require('../data/projectdata.js'),
@@ -32,25 +30,33 @@ export default {
 }
 </script>
 
-<style scoped>
-  #projectGrid{
-    /*align-self: center;*/
-      display: flex;
-      /*align-items: center;*/
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-  .project {
+<style module>
+  .projectGrid{
     position: relative;
     box-sizing: border-box;
+    width: 50%;
+    /*max-width: 500px;*/
+    right: 50%; left: 0;
+    height: 100%;
+    top: 0; bottom: 0; margin: auto auto;
+    background-color: rgba(0,0,255,0.25);
+
+
+
   }
-  .projectContent{
-    position: absolute;
-    top: 0; bottom: 0; left: 0; right: 0;
-    margin: auto auto;
-    border: 1px red solid;
+  @media (orientation: landscape){
+
   }
-  @media only screen and (min-width : 1800px) {
+  @media (orientation: portrait){
+    .projectGrid{
+      width: 100%;
+    }
+
+  }
+
+
+
+/*  @media only screen and (min-width : 1800px) {
     #projectGrid{
 
     }
@@ -76,6 +82,6 @@ export default {
       padding-bottom: 35%;
       border: 1px blue solid;
     }
-  }
+  }*/
 
 </style>
