@@ -39,13 +39,14 @@ export default {
     right: 50%; left: 0;
     height: 100%;
     top: 0; bottom: 0; margin: auto auto;
-    background-color: rgba(0,0,255,0.25);
+    /*background-color: rgba(0,0,255,0.25);*/
+    border: 1px blue solid;
 
 
 
   }
   @media (orientation: landscape){
-
+    width: 50%;
   }
   @media (orientation: portrait){
     .projectGrid{
