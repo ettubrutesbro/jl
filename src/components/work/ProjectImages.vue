@@ -12,11 +12,14 @@
 
 export default {
     name: 'ProjectImages',
-    props: ['gridPosition',],
+    props: ['imgCoords'],
     data (){
         return {
 
         }
+    },
+    created () {
+        console.log(this.position)
     }
 }
 

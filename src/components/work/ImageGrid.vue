@@ -3,7 +3,7 @@
     <ProjectImages 
       v-for = "(item, index) in projects"
       :key = "index"
-      v-bind:grid-position = "imgCoords[index]"
+      v-bind:position = "imgCoords[index]"
     ></Project>
   </div>
 </template>
@@ -26,6 +26,10 @@ export default {
     }
   },
   created () {
+    console.log('grid created')
+    for(var i = 0; i<this.projects.length; i++){
+      this.imgCoords[i] = [0,0]
+    }
     window.addEventListener('load', () => {
       this.gridSpace = this.$el.offsetWidth
 
@@ -39,12 +43,15 @@ export default {
       //for each project in projects(prop), calculate XY
       let whichRow = 0
       let indexInRow = 0
+      let margin = (this.gridSpace - (this.imgsPerRow*this.gridImgSize)) / (this.imgsPerRow - 1)
+      console.log('margin: ' + margin)
       for(var i = 0; i<this.projects.length; i++){
         //coordinate math
-        const xCoord = indexInRow * this.gridImgSize
+        const xCoord = indexInRow>0? (indexInRow * this.gridImgSize) + margin : indexInRow * this.gridImgSize
         const yCoord = whichRow * this.gridImgSize
         console.log(xCoord, yCoord)
         this.imgCoords[i] = [xCoord, yCoord]
+        console.log(this.imgCoords[i])
         //indexing for subsequent images
         if(indexInRow < this.imgsPerRow-1) indexInRow++
         else { indexInRow = 0; whichRow++}

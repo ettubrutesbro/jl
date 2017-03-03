@@ -25,6 +25,9 @@ export default {
       SELECTED: 0,
       PROJECTS: require('../../data/projectdata.js')
     }
+  },
+  created() {
+    this.horizontalSpace = this.$el.offsetWidth
   }
 }
 </script>
