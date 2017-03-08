@@ -27,7 +27,7 @@ export default {
     }
   },
   created() {
-    this.horizontalSpace = this.$el.offsetWidth
+    // this.horizontalSpace = this.$el.offsetWidth
   }
 }
 </script>

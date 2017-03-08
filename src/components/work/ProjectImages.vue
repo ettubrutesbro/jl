@@ -12,13 +12,13 @@
 
 export default {
     name: 'ProjectImages',
-    props: ['imgCoords'],
+    props: ['position'],
     data (){
         return {
 
         }
     },
-    created () {
+    mounted() {
         console.log(this.position)
     }
 }
