@@ -1,10 +1,15 @@
 <template>
   <div id="work">
     <ImageGrid 
-      v-bind:projects = "PROJECTS"
-      v-bind:grid = "!OPEN"
+      :projects = "PROJECTS"
+      :gridWidth = "width"
+      :expandHeight = "height"
     ></ImageGrid>
-    <ExpandedInfo v-if = "OPEN" v-bind:selected = "PROJECTS[SELECTED]"></ExpandedInfo>
+    <ExpandedInfo 
+      v-if = "OPEN" 
+      :selected = "PROJECTS[SELECTED]"
+      :expandHeight = "height"
+    ></ExpandedInfo>
   </div>
 </template>
 
@@ -23,9 +28,20 @@ export default {
     return {
       OPEN: true,
       SELECTED: 0,
-      PROJECTS: require('../../data/projectdata.js')
+      PROJECTS: require('../../data/projectdata.js'),
+      width: 0,
+      height: 0,
     }
   },
+  created(){
+    console.log('work section created')
+    console.log(this.$el)
+  },
+  mounted(){
+    console.log('work section mounted')
+    this.width = this.$el.offsetWidth
+    this.height = this.$el.offsetHeight
+  }
 
 }
 </script>

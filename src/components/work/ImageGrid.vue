@@ -2,8 +2,10 @@
   <div :class = '$style.imageGrid'>
     <ProjectImages 
       v-for = "(item, index) in projects"
+      v-if = "imgCoords[index]"
       key = "index"
-      :position = "imgCoords[index]"
+      :coords = "imgCoords[index]"
+      :dims = "gridImgSize"
     ></Project>
   </div>
 </template>
@@ -17,59 +19,46 @@ export default {
   components: {
     ProjectImages
   },
-  props: ['projects', 'grid'],
+  props: ['projects', 'gridWidth', 'expandHeight'],
   data () {
     return {
-      gridSpace: 0,
+      mode: 'grid',
+      //a series of calculated-once pertaining solely to grid mode
       imgsPerRow: 0,
       gridImgSize: 350,
       imgCoords: []
     }
   },
-  created(){
-    console.log('ImageGrid created')
-    for(var i= 0; i<this.projects.length; i++){
-      this.imgCoords[i] = [0,0]
-    }
-  },
-  mounted() {
-    console.log('ImageGrid mounted')
-    console.log('grid created')
-      // console.log(this)
-      this.gridSpace = this.$el.offsetWidth
-      console.log(this.gridSpace)
+  watch: {
+    gridWidth: function(val){
+      if(val >= 1800) this.imgsPerRow = 5
+      else if(val >= 1200 && val< 1800) this.imgsPerRow = 3
+      else if(val >= 600 && val< 1200) this.imgsPerRow = 2
+      else if(val < 600) this.imgsPerRow = 1
 
-      if(this.gridSpace >= 1800) this.imgsPerRow = 5
-      if(this.gridSpace >= 1200 && this.gridSpace< 1800) this.imgsPerRow = 3
-      if(this.gridSpace >= 600 && this.gridSpace< 1200) this.imgsPerRow = 2
-      if(this.gridSpace < 600) this.imgsPerRow = 1
-      // console.log(this.PROJECTS.length)
-      console.log('# of items per row: ', this.imgsPerRow)
-
-      //for each project in projects(prop), calculate XY
       let whichRow = 0
       let indexInRow = 0
-      let margin = (this.gridSpace - (this.imgsPerRow*this.gridImgSize)) / (this.imgsPerRow - 1)
-
+      let margin = (val - (this.imgsPerRow*this.gridImgSize)) / (this.imgsPerRow - 1)
       for(var i = 0; i<this.projects.length; i++){
-        //coordinate math
         const xCoord = indexInRow>0? (indexInRow * this.gridImgSize) + margin : indexInRow * this.gridImgSize
-        const yCoord = whichRow * this.gridImgSize
-        
-        console.log(xCoord, yCoord)
+        let yCoord = (whichRow * this.gridImgSize)
+        if(whichRow>0)yCoord += margin
 
-        this.imgCoords[i] = [xCoord, yCoord]
+        this.imgCoords.push([xCoord, yCoord])
         
         //indexing for subsequent images
         if(indexInRow < this.imgsPerRow-1) indexInRow++
         else { indexInRow = 0; whichRow++}
 
       }
+    },
+  },
+  created(){
+    console.log('ImageGrid created')
 
-    
+  },
 
-    
-  }
+  
 }
 </script>
 
