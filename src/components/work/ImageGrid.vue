@@ -27,11 +27,13 @@ export default {
     }
   },
   created(){
+    console.log('ImageGrid created')
     for(var i= 0; i<this.projects.length; i++){
       this.imgCoords[i] = [0,0]
     }
   },
   mounted() {
+    console.log('ImageGrid mounted')
     console.log('grid created')
       // console.log(this)
       this.gridSpace = this.$el.offsetWidth

@@ -20,7 +20,8 @@ export default {
         }
     },
     mounted() {
-        console.log(this.position)
+        console.log('ProjectImage mounted')
+        // console.log(this.position)
     }
 }
 
