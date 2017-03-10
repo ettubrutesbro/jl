@@ -26,6 +26,7 @@ export default {
       PROJECTS: require('../../data/projectdata.js')
     }
   },
+
 }
 </script>
 
