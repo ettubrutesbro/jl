@@ -1,5 +1,6 @@
 <template>
-<div id = "project">
+<div id = "project"
+    v-bind:style = "{left: position[0], top: position[1]}">
     <div id = "content">
     </div>
     <div id = "caption">
@@ -12,7 +13,7 @@
 
 export default {
     name: 'ProjectImages',
-    props: ['imgCoords'],
+    props: ['position'],
     data (){
         return {
 
