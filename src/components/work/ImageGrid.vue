@@ -1,5 +1,9 @@
 <template>
-  <div :class = '$style.imageGrid'>
+  <div 
+    :class = '$style.imageGrid'
+    :style = '{width: gridTotalWidth, height: gridTotalHeight}'
+    @selection = "switchMode" 
+    >
     <ProjectImages 
       v-for = "(item, index) in projects"
       v-if = "imgCoords[index]"
@@ -25,40 +29,66 @@ export default {
       mode: 'grid',
       //a series of calculated-once pertaining solely to grid mode
       imgsPerRow: 0,
-      gridImgSize: 350,
+      gridImgSize: 300,
+      gridTotalWidth: 0,
+      gridTotalHeight: 0,
       imgCoords: []
     }
   },
   watch: {
     gridWidth: function(val, oldVal){
       console.log('new width',val,' old width',oldVal)
-      if(val >= 1800) this.imgsPerRow = 5
-      else if(val >= 1200 && val< 1800) this.imgsPerRow = 3
-      else if(val >= 600 && val< 1200) this.imgsPerRow = 2
-      else if(val < 600) this.imgsPerRow = 1
+      if(val===oldVal) return
+
+
+
+      const sqs = this.gridImgSize
+
+      this.imgsPerRow = Math.floor(val / ((sqs)*1.16)) 
+      console.log(val, '/', sqs, '=', this.imgsPerRow)
+      // if(val >= 2000) this.imgsPerRow = 5
+      // if(val >= 1650 && val < 2000) this.imgsPerRow = 4
+      // else if(val >= 1200 && val< 1650) this.imgsPerRow = 3
+      // else if(val >= 600 && val< 1200) this.imgsPerRow = 2
+      // else if(val < 600) this.imgsPerRow = 1
 
       let whichRow = 0
       let indexInRow = 0
-      let margin = (val - (this.imgsPerRow*this.gridImgSize)) / (this.imgsPerRow - 1)
+      // let margin = (val - (this.imgsPerRow*this.gridImgSize)) / (this.imgsPerRow - 1)
+      let margin = 50
       for(var i = 0; i<this.projects.length; i++){
         const xCoord = indexInRow>0? (indexInRow * this.gridImgSize) + (margin * indexInRow) : 0
-        let yCoord = (whichRow * this.gridImgSize)
-        if(whichRow>0)yCoord += margin
+        let yCoord = (whichRow * this.gridImgSize) + (whichRow *margin)
 
         if(this.imgCoords.length===this.projects.length) this.imgCoords.splice(0,this.imgCoords.length)
         this.imgCoords.push([xCoord, yCoord])
+      
         
         //indexing for subsequent images
         if(indexInRow < this.imgsPerRow-1) indexInRow++
         else { indexInRow = 0; whichRow++}
 
+        if(i===this.projects.length-1){
+         this.gridTotalWidth = (this.imgsPerRow * this.gridImgSize) + ((this.imgsPerRow-1)*margin) + 'px'
+         // xCoord+this.gridImgSize+'px'
+         this.gridTotalHeight = yCoord+this.gridImgSize+'px'
+        }
+
       }
+    },
+    gridTotalWidth: function(){
+
     },
   },
   created(){
     console.log('ImageGrid created')
 
   },
+  methods: {
+    switchMode: function(){
+      console.log('imagegrid got selection event, starting switchMode')
+    }
+  }
 
   
 }
@@ -66,7 +96,8 @@ export default {
 
 <style module>
   .imageGrid{
-    /*position: relative;*/
+    align-self: center;
+    position: relative;
     /*box-sizing: border-box;*/
     /*width: 50%;*/
     /*max-width: 500px;*/

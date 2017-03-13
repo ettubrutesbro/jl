@@ -57,7 +57,7 @@ export default {
   display: flex;
   justify-content: center;
   position: fixed;
-  align-items: center;
+  /*align-items: center;*/
   width: 90%;
   /*max-width: 90vw;*/
   /*max-height: 90vh;*/

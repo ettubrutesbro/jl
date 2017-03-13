@@ -6,6 +6,7 @@
         width: dims+'px',
         height: dims+'px',
     }"
+    @click = "handleClick"
 >
     <div id = "content">
     </div>
@@ -28,14 +29,23 @@ export default {
     },
     watch: {
         coords: function(val){
-            console.log('coords changed: ')
-            console.log(val)
+            // console.log('coords changed: ')
+            // console.log(val)
         }
     },
     mounted() {
-        console.log('ProjectImage mounted')
-        console.log('coords: ' + this.coords)
+        // console.log('ProjectImage mounted')
+        // console.log('coords: ' + this.coords)
         // console.log(this.position)
+    },
+    methods: {
+        handleClick: function(e){
+
+            console.log('project image clicked, event data:')
+            console.log(e)
+
+            this.$emit('selection')
+        }
     }
 }
 
