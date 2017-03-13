@@ -9,6 +9,8 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "debounce": "^1.0.0",
+    "throttle-debounce": "^1.0.1",
     "vue": "^2.1.0"
   },
   "devDependencies": {

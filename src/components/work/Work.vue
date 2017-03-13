@@ -5,16 +5,17 @@
       :gridWidth = "width"
       :expandHeight = "height"
     ></ImageGrid>
-    <ExpandedInfo 
+    <!-- <ExpandedInfo 
       v-if = "OPEN" 
       :selected = "PROJECTS[SELECTED]"
       :expandHeight = "height"
-    ></ExpandedInfo>
+    ></ExpandedInfo> -->
   </div>
 </template>
 
 <script>
 
+import debounce from 'debounce'
 import ImageGrid from './ImageGrid.vue'
 import ExpandedInfo from './ExpandedInfo.vue'
 
@@ -34,8 +35,13 @@ export default {
     }
   },
   created(){
-    console.log('work section created')
-    console.log(this.$el)
+    console.log('work section created, adding resize event')
+    window.addEventListener('resize', debounce(()=>{
+      this.width = this.$el.offsetWidth
+      this.height = this.$el.offsetHeight 
+      console.log('resize/recomputed')
+      //emit event to Portfolio with new Height
+    }, 100))
   },
   mounted(){
     console.log('work section mounted')
@@ -53,8 +59,8 @@ export default {
   position: fixed;
   align-items: center;
   width: 90%;
-  max-width: 90vw;
-  max-height: 90vh;
+  /*max-width: 90vw;*/
+  /*max-height: 90vh;*/
   height: 90%;
   top:0; bottom: 0;
   left: 0; right:0; margin: auto auto;

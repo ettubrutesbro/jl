@@ -30,7 +30,8 @@ export default {
     }
   },
   watch: {
-    gridWidth: function(val){
+    gridWidth: function(val, oldVal){
+      console.log('new width',val,' old width',oldVal)
       if(val >= 1800) this.imgsPerRow = 5
       else if(val >= 1200 && val< 1800) this.imgsPerRow = 3
       else if(val >= 600 && val< 1200) this.imgsPerRow = 2
@@ -40,10 +41,11 @@ export default {
       let indexInRow = 0
       let margin = (val - (this.imgsPerRow*this.gridImgSize)) / (this.imgsPerRow - 1)
       for(var i = 0; i<this.projects.length; i++){
-        const xCoord = indexInRow>0? (indexInRow * this.gridImgSize) + margin : indexInRow * this.gridImgSize
+        const xCoord = indexInRow>0? (indexInRow * this.gridImgSize) + (margin * indexInRow) : 0
         let yCoord = (whichRow * this.gridImgSize)
         if(whichRow>0)yCoord += margin
 
+        if(this.imgCoords.length===this.projects.length) this.imgCoords.splice(0,this.imgCoords.length)
         this.imgCoords.push([xCoord, yCoord])
         
         //indexing for subsequent images
@@ -64,15 +66,15 @@ export default {
 
 <style module>
   .imageGrid{
-    position: relative;
-    box-sizing: border-box;
-    width: 50%;
+    /*position: relative;*/
+    /*box-sizing: border-box;*/
+    /*width: 50%;*/
     /*max-width: 500px;*/
-    right: 50%; left: 0;
-    height: 100%;
-    top: 0; bottom: 0; margin: auto auto;
+    /*right: 50%; left: 0;*/
+    /*height: 100%;*/
+    /*top: 0; bottom: 0; margin: auto auto;*/
     /*background-color: rgba(0,0,255,0.25);*/
-    border: 1px blue solid;
+    /*border: 1px blue solid;*/
 
 
 
