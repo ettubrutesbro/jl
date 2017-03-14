@@ -1,7 +1,10 @@
 <template>
-  <div id="portfolio">
-
-    <Work> </Work>
+  <div id="portfolio"
+    :style = "{height: totalHeight+'px'}"
+  >
+    <Work
+      @computedWorkHeight = "addHeight"
+    /> 
     
 
   </div>
@@ -18,7 +21,28 @@ export default {
   },
   data () {
     return {
-    
+      sectionHeights: {
+        intro: 0,
+        work: 0,
+        contact: 0
+      },
+      totalHeight: 0,
+      scroll: 0,
+    }
+  },
+  mounted(){
+    console.log('adding scroll event listener')
+    window.addEventListener('scroll', function(){
+      console.log('we scrolled', window.scrollY)
+      
+    })
+  },
+  methods: {
+    addHeight(sectionHeight, section){
+      if(sectionHeight !== this.sectionHeights[section]){
+        this.totalHeight += (sectionHeight - this.sectionHeights[section])
+        this.sectionHeights[section] = sectionHeight
+      }
     }
   }
 }
@@ -26,6 +50,6 @@ export default {
 
 <style>
   #portfolio{
-    overflow: scroll;
+
   }
 </style>

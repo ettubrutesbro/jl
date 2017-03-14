@@ -1,15 +1,21 @@
 <template>
   <div 
     :class = '$style.imageGrid'
-    :style = '{width: gridTotalWidth, height: gridTotalHeight}'
-    @selection = "switchMode" 
+    :style = '{
+      width: gridTotalWidth, 
+      height: gridTotalHeight,
+      transform: translation}'
     >
     <ProjectImages 
       v-for = "(item, index) in projects"
       v-if = "imgCoords[index]"
-      key = "index"
+      :key = "index"
+      :index = "index"
       :coords = "imgCoords[index]"
       :dims = "gridImgSize"
+      @selection = "imageSelect"
+      :class = "{selected: index===selected}"
+
     ></Project>
   </div>
 </template>
@@ -32,33 +38,30 @@ export default {
       gridImgSize: 300,
       gridTotalWidth: 0,
       gridTotalHeight: 0,
-      imgCoords: []
+      imgCoords: [],
+      //component state
+      selected: -1,
+      translation: false,
     }
   },
   watch: {
     gridWidth: function(val, oldVal){
-      console.log('new width',val,' old width',oldVal)
       if(val===oldVal) return
-
-
-
-      const sqs = this.gridImgSize
-
-      this.imgsPerRow = Math.floor(val / ((sqs)*1.16)) 
-      console.log(val, '/', sqs, '=', this.imgsPerRow)
-      // if(val >= 2000) this.imgsPerRow = 5
-      // if(val >= 1650 && val < 2000) this.imgsPerRow = 4
-      // else if(val >= 1200 && val< 1650) this.imgsPerRow = 3
-      // else if(val >= 600 && val< 1200) this.imgsPerRow = 2
-      // else if(val < 600) this.imgsPerRow = 1
-
+      //constant and shorthand
+      const img = this.gridImgSize
+      const margin = 50
+      //counters for recursive positioning
       let whichRow = 0
       let indexInRow = 0
-      // let margin = (val - (this.imgsPerRow*this.gridImgSize)) / (this.imgsPerRow - 1)
-      let margin = 50
+      //totals for CSS and scroll calculation
+      let gridWidth
+      let gridHeight
+
+      this.imgsPerRow = Math.floor(val / (img*(1+(1/(img / margin))))) 
+
       for(var i = 0; i<this.projects.length; i++){
-        const xCoord = indexInRow>0? (indexInRow * this.gridImgSize) + (margin * indexInRow) : 0
-        let yCoord = (whichRow * this.gridImgSize) + (whichRow *margin)
+        const xCoord = indexInRow>0? (indexInRow * img) + (margin * indexInRow) : 0
+        let yCoord = (whichRow * img) + (whichRow *margin)
 
         if(this.imgCoords.length===this.projects.length) this.imgCoords.splice(0,this.imgCoords.length)
         this.imgCoords.push([xCoord, yCoord])
@@ -68,13 +71,16 @@ export default {
         if(indexInRow < this.imgsPerRow-1) indexInRow++
         else { indexInRow = 0; whichRow++}
 
-        if(i===this.projects.length-1){
-         this.gridTotalWidth = (this.imgsPerRow * this.gridImgSize) + ((this.imgsPerRow-1)*margin) + 'px'
-         // xCoord+this.gridImgSize+'px'
-         this.gridTotalHeight = yCoord+this.gridImgSize+'px'
-        }
+        if(i===this.projects.length-1){ //last project - width and height totals are calculable now
+          gridWidth = (this.imgsPerRow * img) + ((this.imgsPerRow-1)*margin)
+          gridHeight = yCoord+img
 
+          this.gridTotalWidth = gridWidth + 'px'
+          this.gridTotalHeight = gridHeight + 'px'
+          this.$emit('computedGridHeight', gridHeight)
+        }
       }
+      
     },
     gridTotalWidth: function(){
 
@@ -85,8 +91,10 @@ export default {
 
   },
   methods: {
-    switchMode: function(){
-      console.log('imagegrid got selection event, starting switchMode')
+    imageSelect: function(index){
+      console.log(index)
+      this.selected = index
+      this.translation = 'translateX('+(-this.imgCoords[index][0])+'px) translateY('+(-this.imgCoords[index][1])+'px)'
     }
   }
 
@@ -106,7 +114,7 @@ export default {
     /*top: 0; bottom: 0; margin: auto auto;*/
     /*background-color: rgba(0,0,255,0.25);*/
     /*border: 1px blue solid;*/
-
+    transition: transform 1s;
 
 
   }

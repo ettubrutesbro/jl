@@ -4,6 +4,7 @@
       :projects = "PROJECTS"
       :gridWidth = "width"
       :expandHeight = "height"
+      @computedGridHeight = "emitHeight"
     ></ImageGrid>
     <!-- <ExpandedInfo 
       v-if = "OPEN" 
@@ -47,6 +48,11 @@ export default {
     console.log('work section mounted')
     this.width = this.$el.offsetWidth
     this.height = this.$el.offsetHeight
+  },
+  methods: {
+    emitHeight(height){
+      this.$emit('computedWorkHeight', height, 'work')
+    }
   }
 
 }
@@ -54,10 +60,10 @@ export default {
 
 <style>
 #work{
+  
   display: flex;
   justify-content: center;
-  position: fixed;
-  /*align-items: center;*/
+  align-items: center;
   width: 90%;
   /*max-width: 90vw;*/
   /*max-height: 90vh;*/

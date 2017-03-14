@@ -8,10 +8,7 @@
     }"
     @click = "handleClick"
 >
-    <div id = "content">
-    </div>
-    <div id = "caption">
-    </div>
+    {{index}}
 </div>
 </template>
 
@@ -22,9 +19,12 @@ export default {
     props: {
         coords: Array,
         dims: Number,
+        index: Number,
     },
     data (){
         return {
+            // yTranslation: 0,
+
         }
     },
     watch: {
@@ -39,12 +39,15 @@ export default {
         // console.log(this.position)
     },
     methods: {
-        handleClick: function(e){
+        handleClick: function(evt){
+            //if nothing selected
+            this.$emit('selection', this.index)
 
-            console.log('project image clicked, event data:')
-            console.log(e)
 
-            this.$emit('selection')
+            // const rect = this.$el.getBoundingClientRect()
+            // this.yTranslation = -rect.top
+            // this.xTranslation = -rect.left
+
         }
     }
 }
@@ -64,6 +67,9 @@ export default {
         justify-content: center*/;
         /*border: 1px black solid;*/
         background-color: rgba(0,0,255,0.1);
+        &.selected{
+            background-color: red;
+        }
     }
     #content {
         /*width: 100%;*/
