@@ -30,13 +30,6 @@ export default {
       scroll: 0,
     }
   },
-  mounted(){
-    console.log('adding scroll event listener')
-    window.addEventListener('scroll', function(){
-      console.log('we scrolled', window.scrollY)
-      
-    })
-  },
   methods: {
     addHeight(sectionHeight, section){
       if(sectionHeight !== this.sectionHeights[section]){

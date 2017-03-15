@@ -60,14 +60,15 @@ export default {
 
 <style>
 #work{
-  
+
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  /*width: 90%;*/
   /*max-width: 90vw;*/
   /*max-height: 90vh;*/
-  height: 90%;
+  /*height: 90%;*/
+  width: 100%; height: 100%;
   top:0; bottom: 0;
   left: 0; right:0; margin: auto auto;
 }

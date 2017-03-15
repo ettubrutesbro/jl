@@ -42,11 +42,10 @@ export default {
         handleClick: function(evt){
             //if nothing selected
             this.$emit('selection', this.index)
+            Velocity(this.$el, {width: '600px'})
 
 
-            // const rect = this.$el.getBoundingClientRect()
-            // this.yTranslation = -rect.top
-            // this.xTranslation = -rect.left
+            
 
         }
     }

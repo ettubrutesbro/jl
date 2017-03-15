@@ -2,26 +2,42 @@
   <div 
     :class = '$style.imageGrid'
     :style = '{
-      width: gridTotalWidth, 
-      height: gridTotalHeight,
-      transform: translation}'
+      width: gridTotalWidthPx, 
+      height: gridTotalHeightPx,
+      //transform: translate(move.x, move.y)
+      }'
     >
-    <ProjectImages 
-      v-for = "(item, index) in projects"
-      v-if = "imgCoords[index]"
-      :key = "index"
-      :index = "index"
-      :coords = "imgCoords[index]"
-      :dims = "gridImgSize"
-      @selection = "imageSelect"
-      :class = "{selected: index===selected}"
+    <transition-group
+      name = "enterExit"
+      tag = "div"
+      :css="false"
+      @enter="enter"
+      @leave="leave"
+    >
+      <ProjectImages 
+        v-for = "(item, index) in projects"
+        v-if = "imgCoords[index] && (selected===-1||(selected===index))"
+        :key = "index"
+        :index = "index"
+        :coords = "imgCoords[index]"
+        :dims = "gridImgSize"
+        @selection = "imageSelect"
+        :class = "{
+          selected: index===selected, 
+          unselected: selected>-1&&index!==selected,
+          beforeSelected: index < selected,
+          afterSelected: index > selected
+        }"
 
-    ></Project>
+      />
+    </transition-group>
   </div>
 </template>
 
 <script>
 import ProjectImages from './ProjectImages.vue'
+import translate from '../../utility/translate.js'
+import Velocity from 'velocity-animate'
 
 export default {
   name: 'ImageGrid',
@@ -41,11 +57,17 @@ export default {
       imgCoords: [],
       //component state
       selected: -1,
-      translation: false,
+      move: {x: 0, y:0},
     }
+  },
+  computed: {
+    gridTotalHeightPx: function(){ return this.gridTotalHeight+'px' },
+    gridTotalWidthPx: function(){ return this.gridTotalWidth +'px'},
+
   },
   watch: {
     gridWidth: function(val, oldVal){
+      //can this be rewritten in computed? watchers are probably not the best pattern.
       if(val===oldVal) return
       //constant and shorthand
       const img = this.gridImgSize
@@ -54,8 +76,6 @@ export default {
       let whichRow = 0
       let indexInRow = 0
       //totals for CSS and scroll calculation
-      let gridWidth
-      let gridHeight
 
       this.imgsPerRow = Math.floor(val / (img*(1+(1/(img / margin))))) 
 
@@ -72,12 +92,10 @@ export default {
         else { indexInRow = 0; whichRow++}
 
         if(i===this.projects.length-1){ //last project - width and height totals are calculable now
-          gridWidth = (this.imgsPerRow * img) + ((this.imgsPerRow-1)*margin)
-          gridHeight = yCoord+img
+          this.gridTotalWidth = (this.imgsPerRow * img) + ((this.imgsPerRow-1)*margin)
+          this.gridTotalHeight = yCoord+img
 
-          this.gridTotalWidth = gridWidth + 'px'
-          this.gridTotalHeight = gridHeight + 'px'
-          this.$emit('computedGridHeight', gridHeight)
+          this.$emit('computedGridHeight', this.gridTotalHeight)
         }
       }
       
@@ -85,6 +103,7 @@ export default {
     gridTotalWidth: function(){
 
     },
+
   },
   created(){
     console.log('ImageGrid created')
@@ -92,9 +111,29 @@ export default {
   },
   methods: {
     imageSelect: function(index){
-      console.log(index)
+      const gridRect = this.$el.getBoundingClientRect()
+      const old = {x: this.move.x, y: this.move.y}
+      this.move.x -= (this.imgCoords[index][0] + gridRect.left)
+      this.move.y -= (this.imgCoords[index][1] + gridRect.top)
+      const distance = (old.x - this.move.x) + (old.x - this.move.y)
+      console.log(distance)
       this.selected = index
-      this.translation = 'translateX('+(-this.imgCoords[index][0])+'px) translateY('+(-this.imgCoords[index][1])+'px)'
+
+      Velocity(this.$el, {translateX: this.move.x+'px', translateY: this.move.y+'px'}, {easing: 'easeOutSine', duration: distance/5000})
+      // this.translation = 'translateX('+(-moveX)+'px) translateY('+(-moveY)+'px)'
+    },
+    returnToGrid: function(){  
+      this.selected = -1
+      const distance = this.move.x + this.move.y
+      this.move.x = this.move.y = 0 
+      Velocity(this.$el, {translateX: this.move.x+'px', translateY: this.move.y+'px'}, {easing: 'easeOutSine', duration: distance/5000})
+    },
+    enter: function(el, done){
+      Velocity(el, {opacity: 1}, {complete: done})
+    },
+    leave: function(el, done){
+      console.log(this)
+      Velocity(el, {opacity: 0}, {complete: done})
     }
   }
 
@@ -113,7 +152,7 @@ export default {
     /*height: 100%;*/
     /*top: 0; bottom: 0; margin: auto auto;*/
     /*background-color: rgba(0,0,255,0.25);*/
-    /*border: 1px blue solid;*/
+    border: 1px blue solid;
     transition: transform 1s;
 
 
