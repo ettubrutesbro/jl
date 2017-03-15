@@ -1,5 +1,5 @@
 <template>
-<div id = "project"
+<div class = "project"
     :style = "{
         left: coords[0]+'px', 
         top: coords[1]+'px', 
@@ -42,7 +42,7 @@ export default {
         handleClick: function(evt){
             //if nothing selected
             this.$emit('selection', this.index)
-            Velocity(this.$el, {width: '600px'})
+            // Velocity(this.$el, {width: '600px'})
 
 
             
@@ -55,7 +55,7 @@ export default {
 
 <style>
 
-    #project{
+    .project{
         position: absolute;
         /*top: 0; bottom: 0; margin: auto auto;*/
         /*width: 100%;*/
@@ -69,20 +69,6 @@ export default {
         &.selected{
             background-color: red;
         }
-    }
-    #content {
-        /*width: 100%;*/
-        /*height: 100%;*/
-        /*background-color: black;
-        background-image: url(../../../assets/projects/seseme/closeup.jpg);
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: 50% 50%;*/
-    }
-    #caption{
-       /* box-sizing: border-box;
-        border: 1px teal solid;*/
-        /*height: 10px;*/
     }
 
 </style>

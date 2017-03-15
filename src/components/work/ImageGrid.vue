@@ -1,14 +1,13 @@
 <template>
   <div 
-    :class = '$style.imageGrid'
+    class = 'imageGrid'
     :style = '{
       width: gridTotalWidthPx, 
       height: gridTotalHeightPx,
-      //transform: translate(move.x, move.y)
       }'
     >
     <transition-group
-      name = "enterExit"
+      name = "grid-transition"
       tag = "div"
       :css="false"
       @enter="enter"
@@ -23,10 +22,7 @@
         :dims = "gridImgSize"
         @selection = "imageSelect"
         :class = "{
-          selected: index===selected, 
-          unselected: selected>-1&&index!==selected,
-          beforeSelected: index < selected,
-          afterSelected: index > selected
+          selected: index===selected
         }"
 
       />
@@ -36,8 +32,9 @@
 
 <script>
 import ProjectImages from './ProjectImages.vue'
-import translate from '../../utility/translate.js'
+// import translate from '../../utility/translate.js'
 import Velocity from 'velocity-animate'
+import getElementIndex from '../../utility/getElementIndex.js'
 
 export default {
   name: 'ImageGrid',
@@ -110,6 +107,7 @@ export default {
 
   },
   methods: {
+    getElementIndex: getElementIndex,
     imageSelect: function(index){
       const gridRect = this.$el.getBoundingClientRect()
       const old = {x: this.move.x, y: this.move.y}
@@ -119,21 +117,38 @@ export default {
       console.log(distance)
       this.selected = index
 
-      Velocity(this.$el, {translateX: this.move.x+'px', translateY: this.move.y+'px'}, {easing: 'easeOutSine', duration: distance/5000})
+      Velocity(this.$el, {translateX: this.move.x+'px', translateY: this.move.y+'px'}, {easing: 'easeOutSine', duration: distance/10000+(index*20), delay: 50+(index*35)})
       // this.translation = 'translateX('+(-moveX)+'px) translateY('+(-moveY)+'px)'
     },
     returnToGrid: function(){  
       this.selected = -1
-      const distance = this.move.x + this.move.y
-      this.move.x = this.move.y = 0 
+      const distance = Math.abs(this.move.x + this.move.y)
+      this.move.x = 0
+      this.move.y = 0 
       Velocity(this.$el, {translateX: this.move.x+'px', translateY: this.move.y+'px'}, {easing: 'easeOutSine', duration: distance/5000})
     },
     enter: function(el, done){
-      Velocity(el, {opacity: 1}, {complete: done})
+      done()
+      Velocity(el, {translateX: 0, translateY: 0, opacity: [1,0]})
     },
     leave: function(el, done){
-      console.log(this)
-      Velocity(el, {opacity: 0}, {complete: done})
+      //some randomization stuff for 'choreos' 
+
+      let relation
+      //this.selected is 0 or projects.length-1 (first/last)
+      if(this.selected === 0)  relation = 'first'
+      else if(this.selected === this.projects.length-1) relation = 'last'
+      else relation = getElementIndex(el) > this.selected? 'after': 'before'
+      const unit = this.gridImgSize + 'px'
+      let animation
+      switch(relation){ //values should determine on what's the longer screen dimension
+        case 'first': animation = {translateX: unit, translateY: unit, opacity: 0}; break;
+        case 'last': animation = {translateX: '-'+unit, translateY: '-'+unit, opacity: 0}; break;
+        case 'before': animation = {translateY: '-'+unit, opacity: 0}; break;
+        case 'after': animation = {translateY: unit, opacity: 0}; break;
+      }
+
+      Velocity(el, animation, {easing: 'easeOutCubic', complete: done, duration: 650})
     }
   }
 
@@ -141,31 +156,41 @@ export default {
 }
 </script>
 
-<style module>
+<style>
   .imageGrid{
     align-self: center;
     position: relative;
-    /*box-sizing: border-box;*/
-    /*width: 50%;*/
-    /*max-width: 500px;*/
-    /*right: 50%; left: 0;*/
-    /*height: 100%;*/
-    /*top: 0; bottom: 0; margin: auto auto;*/
-    /*background-color: rgba(0,0,255,0.25);*/
-    border: 1px blue solid;
+    /*border: 1px blue solid;*/
     transition: transform 1s;
-
-
   }
-  @media (orientation: landscape){
+
+  .afterSelected{
+    &.grid-transition-leave-active{
+      transition: transform .2s;
+    }
+    &.grid-transition-leave-to{
+      transform: translateY(50px);
+    }
+  }
+
+  .beforeSelected{
+    &.grid-transition-leave-active{
+      transition: transform .2s;
+    }
+    &.grid-transition-leave-to{
+      transform: translateY(-50px);
+    }
+  }
+  
+  
+  /*@media (orientation: landscape){
     width: 50%;
   }
   @media (orientation: portrait){
     .imageGrid{
       width: 100%;
     }
-
-  }
+  }*/
 
 
 
