@@ -27,6 +27,8 @@
 
       />
     </transition-group>
+
+    <div class = "debugBack" @click = "returnToGrid"/>
   </div>
 </template>
 
@@ -109,23 +111,22 @@ export default {
   methods: {
     getElementIndex: getElementIndex,
     imageSelect: function(index){
-      const gridRect = this.$el.getBoundingClientRect()
+      const distanceViewport = this.$el.getBoundingClientRect()
       const old = {x: this.move.x, y: this.move.y}
-      this.move.x -= (this.imgCoords[index][0] + gridRect.left)
-      this.move.y -= (this.imgCoords[index][1] + gridRect.top)
-      const distance = (old.x - this.move.x) + (old.x - this.move.y)
+      this.move.x -= (this.imgCoords[index][0] + distanceViewport.left)
+      this.move.y -= (this.imgCoords[index][1] + distanceViewport.top )
+      const distance = Math.sqrt(Math.pow((old.x - this.move.x),2) + Math.pow((old.x - this.move.y),2))
       console.log(distance)
       this.selected = index
 
-      Velocity(this.$el, {translateX: this.move.x+'px', translateY: this.move.y+'px'}, {easing: 'easeOutSine', duration: distance/10000+(index*20), delay: 50+(index*35)})
-      // this.translation = 'translateX('+(-moveX)+'px) translateY('+(-moveY)+'px)'
+      Velocity(this.$el, {translateX: this.move.x+'px', translateY: this.move.y+'px'}, {easing: distance > 1000 ? 'easeOutCubic' : 'easeOutSine', duration: 150+(distance/1.5), delay: 200})
     },
     returnToGrid: function(){  
       this.selected = -1
-      const distance = Math.abs(this.move.x + this.move.y)
+      const distance = Math.sqrt(Math.pow(this.move.x,2) + Math.pow(this.move.y,2))
       this.move.x = 0
       this.move.y = 0 
-      Velocity(this.$el, {translateX: this.move.x+'px', translateY: this.move.y+'px'}, {easing: 'easeOutSine', duration: distance/5000})
+      Velocity(this.$el, {translateX: this.move.x+'px', translateY: this.move.y+'px'}, {easing: distance > 1000 ? 'easeOutCubic' : 'easeOutSine', duration: 100+(distance/1.5)})
     },
     enter: function(el, done){
       done()
@@ -139,7 +140,7 @@ export default {
       if(this.selected === 0)  relation = 'first'
       else if(this.selected === this.projects.length-1) relation = 'last'
       else relation = getElementIndex(el) > this.selected? 'after': 'before'
-      const unit = this.gridImgSize + 'px'
+      const unit = (this.gridImgSize)/1.75 + 'px'
       let animation
       switch(relation){ //values should determine on what's the longer screen dimension
         case 'first': animation = {translateX: unit, translateY: unit, opacity: 0}; break;
@@ -148,7 +149,7 @@ export default {
         case 'after': animation = {translateY: unit, opacity: 0}; break;
       }
 
-      Velocity(el, animation, {easing: 'easeOutCubic', complete: done, duration: 650})
+      Velocity(el, animation, {easing: 'easeOutCubic', complete: done, duration: 450})
     }
   }
 
@@ -160,8 +161,6 @@ export default {
   .imageGrid{
     align-self: center;
     position: relative;
-    /*border: 1px blue solid;*/
-    transition: transform 1s;
   }
 
   .afterSelected{
@@ -181,45 +180,15 @@ export default {
       transform: translateY(-50px);
     }
   }
-  
-  
-  /*@media (orientation: landscape){
-    width: 50%;
+
+  .debugBack{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 50px;
+    height: 50px;
+    background-color: grey;
   }
-  @media (orientation: portrait){
-    .imageGrid{
-      width: 100%;
-    }
-  }*/
-
-
-
-/*  @media only screen and (min-width : 1800px) {
-    #imageGrid{
-
-    }
-    .project {
-      width: 150px;
-      height: 150px;
-      border: 1px red solid;
-    }
-}
-  @media only screen and (min-width : 1200px) and (max-width: 1799px){
-    #imageGrid { width: 1100px; }
-    .project {
-      width: 300px;
-      height: 300px;
-      border: 1px green solid;
-    }
-  }
-  
-  @media only screen and (min-width : 600px) and (max-width: 1199px){
-   #imageGrid{ width: 90%;  }
-    .project {
-      width: 35%;
-      padding-bottom: 35%;
-      border: 1px blue solid;
-    }
-  }*/
 
 </style>
