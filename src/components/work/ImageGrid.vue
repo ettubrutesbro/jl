@@ -21,6 +21,7 @@
         :coords = "imgCoords[index]"
         :dims = "gridImgSize"
         @selection = "imageSelect"
+        @click = "index===selected? returnToGrid : returnToGrid"
         :class = "{
           selected: index===selected
         }"
@@ -28,7 +29,6 @@
       />
     </transition-group>
 
-    <div class = "debugBack" @click = "returnToGrid"/>
   </div>
 </template>
 
@@ -179,16 +179,6 @@ export default {
     &.grid-transition-leave-to{
       transform: translateY(-50px);
     }
-  }
-
-  .debugBack{
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    width: 50px;
-    height: 50px;
-    background-color: grey;
   }
 
 </style>
